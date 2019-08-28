@@ -1,0 +1,17 @@
+NY,NYC,PS122,K,1000
+NY,NYC,PS122,1,2000
+NY,NYC,PS122,4,3000
+NY,NYC,St-Judes,4,43
+NY,NYC,St-Judes,5,57
+NY,Albany,GreenAcres,K,3
+NY,Albany,GreenAcres,2,5
+NY,Albany,GreenAcres,3,10
+NY,Albany,BlueHills,3,123
+NY,Albany,BlueHills,4,302
+NY,Albany,BlueHills,5,67
+NY,Rochester,HappyTrails,5,76
+
+CA,San Francisco,SunnySide,7,1
+CA,San Francisco,SunnySide,6,10
+CA,San Francisco,GlenPark,7,20
+CA,San Francisco,GlenPark,6,10
