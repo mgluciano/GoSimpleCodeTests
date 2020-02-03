@@ -130,16 +130,16 @@ func main() {
       json.Unmarshal([]byte(body),&result2)
 
       if(len(result["run_results"]["post_run_items"])!=len(result2["run_results"]["post_run_items"])){
-        fmt.Println("\nLength is Different\nv1.0\n")
+        fmt.Printf("\nLength is Different\nv1.0 %d\n1.1 %d\n",len(result["run_results"]["post_run_items"]),len(result2["run_results"]["post_run_items"]))
         v1string :="";
         v2string :="";
         for i:=0; i<len(result["run_results"]["post_run_items"]);i++ {
           fmt.Printf("%d\t%s\n",i,result["run_results"]["post_run_items"][i]["epc"])
-          v1string=fmt.Sprintf("%s\n%s",result["run_results"]["post_run_items"][i]["epc"],v1string)
+          v1string=fmt.Sprintf("%s\n%s\n",result["run_results"]["post_run_items"][i]["epc"],v1string)
         }
         fmt.Println("\nv1.1\n")
         for i:=0; i<len(result2["run_results"]["post_run_items"]);i++ {
-          fmt.Printf("%d\t%s\n",i,result2["run_results"]["post_run_items"][i]["epc"])
+          fmt.Printf("%d\t%s",i,result2["run_results"]["post_run_items"][i]["epc"])
           v2string=fmt.Sprintf("%s\n%s",result2["run_results"]["post_run_items"][i]["epc"],v2string)
         }
         _ = WriteRow([NumCol]string{orderId,string(len(result["run_results"]["post_run_items"])),v1string,string(len(result2["run_results"]["post_run_items"])),v2string,"Length is Different"},sheet)
@@ -147,15 +147,24 @@ func main() {
       }else{
         v1string :="";
         v2string :="";
+        no_match := false;
         for j:=0; j<len(result["run_results"]["post_run_items"]);j++ {
-            if( result["run_results"]["post_run_items"][j]["epc"] != result2["run_results"]["post_run_items"][j]["epc"]) {
-              fmt.Printf("\nValues Don't Match\n%s\n%s\n",result["run_results"]["post_run_items"][j],result["run_results"]["post_run_items"][j])
-            }
+
             v1string=fmt.Sprintf("%s\n%s",result["run_results"]["post_run_items"][j]["epc"],v1string)
             v2string=fmt.Sprintf("%s\n%s",result2["run_results"]["post_run_items"][j]["epc"],v2string)
+            if( result["run_results"]["post_run_items"][j]["epc"] != result2["run_results"]["post_run_items"][j]["epc"]) {
+              fmt.Printf("\nValues Don't Match\n%s\n%s\n",result["run_results"]["post_run_items"][j],result["run_results"]["post_run_items"][j])
+              no_match=true
+            }
+        }
+        if (no_match){
+          WriteRow([NumCol]string{orderId,string(len(result["run_results"]["post_run_items"])),v1string,string(len(result2["run_results"]["post_run_items"])),v2string,"Values Don't Match"},sheet)
+        }else{
+          WriteRow([NumCol]string{orderId,string(len(result["run_results"]["post_run_items"])),v1string,string(len(result2["run_results"]["post_run_items"])),v2string,"Match"},sheet)
         }
 
-        WriteRow([NumCol]string{orderId,string(len(result["run_results"]["post_run_items"])),v1string,string(len(result2["run_results"]["post_run_items"])),v2string,"Length is Different"},sheet)
+
+
       }
       // HANDLE
 
