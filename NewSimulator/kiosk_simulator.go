@@ -61,7 +61,7 @@ func main() {
   loginID:=flag.Arg(1)
   errorType := flag.Arg(2)  // Options RFID, Temp, Locked, SkipStatus
   Time:= fmt.Sprintf("%v",currentTime.Format("20060102"))
-  fmt.Printf("MM-DD-YYYY : ->%s<- \nFor kiosk ->%s<-\nError Type=>%s<=\nLoginID=>%s<=\n\n", Time,storeID,loginID,errorType)
+  fmt.Printf("\n\n\n\t\tNEW VERSION\n\nMM-DD-YYYY : ->%s<- \nFor kiosk ->%s<-\nError Type=>%s<=\nLoginID=>%s<=\n\n", Time,storeID,loginID,errorType)
 
 
   models.InitDB();
@@ -71,20 +71,20 @@ func main() {
   Initiate Stage Kiosk
 */
 
-  head,body,err := models.CreateLogin(storeID);
+  login,err := models.CreateLogin(storeID);
   if (err !=nil){
     // try again
-    head,body,err = models.CreateLogin(storeID);
+    login,err = models.CreateLogin(storeID);
     if (err !=nil){
       fmt.Println("Could Not Get Production Login For store",storeID,"\nERROR=>",err)
       return
     }
   }
-  cookie,err2 := models.GetStgLoginCookie(head,body)
+  cookie,err2 := models.GetStgLoginCookie(login)
   //fmt.Println("cookie->",cookie,"\nERROR=>",err2)
   if (err2 !=nil){
     // try again
-    cookie,err2 = models.GetStgLoginCookie(head,body)
+    cookie,err2 = models.GetStgLoginCookie(login)
     if (err2 !=nil){
       fmt.Println("Failed to Get Cookie cookie->",cookie,"\nERROR=>",err2)
       return
