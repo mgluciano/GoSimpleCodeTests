@@ -1,0 +1,12 @@
+
+// mysql Local DB Settings
+stageWhost = stg-iot-master.bytetech.co
+stageUser = dbservice
+stagePassword  = Stage_DB_Password
+
+
+rhost = prd-iot-slave.bytetech.co
+user = dbservice
+password  = DB_Password
+db_name  = pantry
+port = 5432
