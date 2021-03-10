@@ -274,4 +274,35 @@ Body=> {"coupon":"","created":1615344675,"currency":"USD","email":"Tester5663@te
 Cookie=>pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDY4NCwiZXhwIjoxNjE2Mzk5NDg0fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.-pQVD2eZR69pHzQ43_fDiMfTRg5s4qGqjPLI3b10K6Q<=
 Body Length=825
 TransactionBody{"payment_status": "PENDING", "email": "Unknown"}
-^C
+^CRebuilding Kiosk_Simulatror 
+Current Time in String:  2021-03-10 19:51:17.2555966 +0000 UTC m=+0.001071901
+MM-DD-YYYY :  03-10-2021
+MM-DD-YYYY : ->20210310<- For kiosk ->635<-In IntiDB
+V=host=prd-iot-slave.bytetech.co port=5432 user=dbservice password=e7Ws3VXCYHZk dbname=pantry sslmode=disable
+2021/03/10 19:51:17 Successfuly Connected to -->prd-iot-slave.bytetech.co<--
+V=host=stg-iot-master.bytetech.co port=5432 user=dbservice password=bghbzz79bML4 dbname=pantry sslmode=disable
+2021/03/10 19:51:17 Successfuly Connected to -->stg-iot-master.bytetech.co<--
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '635'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->635<-
+^CRebuilding Kiosk_Simulatror 
+Current Time in String:  2021-03-10 20:10:11.2315097 +0000 UTC m=+0.001149001
+MM-DD-YYYY :  03-10-2021
+MM-DD-YYYY : ->20210310<- For kiosk ->635<-In IntiDB
+V=host=prd-iot-slave.bytetech.co port=5432 user=dbservice password=e7Ws3VXCYHZk dbname=pantry sslmode=disable
+2021/03/10 20:10:11 Successfuly Connected to -->prd-iot-slave.bytetech.co<--
+V=host=stg-iot-master.bytetech.co port=5432 user=dbservice password=bghbzz79bML4 dbname=pantry sslmode=disable
+2021/03/10 20:10:11 Successfuly Connected to -->stg-iot-master.bytetech.co<--
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '635'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->635<-
+^CRebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
