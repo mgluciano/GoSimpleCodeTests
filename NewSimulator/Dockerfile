@@ -1,7 +1,7 @@
 FROM golang:1.14
 
 
-WORKDIR /go/src/new_simulator
+WORKDIR /go/src/kiosk_simulator
 COPY . .
 
 
