@@ -72,17 +72,20 @@ type Configuration struct {
 }
 
 
-func CreateLogin(storeID string)(Login,error){
+func CreateLogin(storeID string)(string,error){
 
 
   login, err :=getKioskDetails(storeID)
+  if(err!=nil){
+    return "", err
+  }
   //login.Components:=new(Components)
   app_vname:=""
   login.Components,app_vname,err =getComponents(storeID)
   if(err!=nil){
     login.Components,app_vname,err =getComponents(storeID)
     if(err!=nil){
-      return login, err
+      return "", err
     }
   }
   if app_vname !=""{
@@ -93,7 +96,7 @@ func CreateLogin(storeID string)(Login,error){
 
   x,_ :=json.Marshal(login)
   fmt.Println("RAW LOGIN 1",string(x))
-  return login,nil
+  return string(x),nil
 }
 
 func getKioskDetails(sID string)(Login,error){
@@ -256,7 +259,7 @@ func KioskLoginFromProd(storeID string) (string,string,error){
 
 }
 
-func GetStgLoginCookie (req_head string,req_body string)(string,error){
+func GetStgLoginCookie (req_body string)(string,error){
       fmt.Println("HERE IN GetStgLoginCookie")
       //req, err := http.NewRequest("POST", "http://kiosk-stg.bytefoods.com/login", strings.NewReader(req_body))
       req, err := http.NewRequest("POST", "http://kiosk-stg.bytetech.co/login", strings.NewReader(req_body))
