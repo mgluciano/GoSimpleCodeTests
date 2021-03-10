@@ -1,4 +1,4 @@
-
+package main
 /*
 This Application Requires At Least Two Parameters
   Store ID
@@ -11,7 +11,7 @@ Also can take in a Third Argument
     SkipStatus
 
 */
-package main
+
 
 import (
     "fmt"
@@ -21,7 +21,7 @@ import (
     _ "github.com/lib/pq"
     "time"
     "github.com/byte/GoSimpleCodeTests/NewSimulator/models"
-    //"./models"
+    //"models"
 
 )
 
@@ -66,16 +66,15 @@ func main() {
 
   models.InitDB();
 
-  fmt.Println("Login=",string(CreateLogin(storeID)));
 
 /*
   Initiate Stage Kiosk
 */
 
-  head,body,err := models.KioskLoginFromProd(storeID);
+  head,body,err := models.CreateLogin(storeID);
   if (err !=nil){
     // try again
-    head,body,err = models.KioskLoginFromProd(storeID);
+    head,body,err = models.CreateLogin(storeID);
     if (err !=nil){
       fmt.Println("Could Not Get Production Login For store",storeID,"\nERROR=>",err)
       return
@@ -92,17 +91,17 @@ func main() {
     }
   }
 
-  inv := GetCurrentInventory(storeID)
+  inv := models.GetCurrentInventory(storeID)
 
   fmt.Println("Current Inventory Length->",len(inv),"\nINV=>",inv)
 
   if(len(inv) < 15){
-    ni:=AddItemsToInventory(cookie,storeID)
+    ni:=models.AddItemsToInventory(cookie,storeID)
     for i:=0;i<len(ni);i++ {
       inv = append(inv,ni[i])
     }
   }
-  err=SendInventoryCall(cookie,inv)
+  err=models.SendInventoryCall(cookie,inv)
 
   status,err := models.KioskStatusFromProd(storeID)
   if (err !=nil){
@@ -127,21 +126,21 @@ func main() {
     }
 
     log.Println("Infinite Loop ",ct)
-    inv = GetCurrentInventory(storeID)
+    inv = models.GetCurrentInventory(storeID)
     if((ct %3) ==0){
-      err=SendInventoryCall(cookie,inv)
+      err=models.SendInventoryCall(cookie,inv)
     }
 
     err=models.SendStatusMessage(cookie,status)
     if (err !=nil){
       fmt.Printf("ERROR Sending Status for %d iteration Store ID %s\n\tERROR=%v\n ",ct,storeID,err)
-      err=modelsSendStatusMessage(cookie,status)
+      err=models.SendStatusMessage(cookie,status)
       if (err !=nil){
         fmt.Printf("ERROR2 Sending Status for %d iteration Store ID %s\n\tERROR=%v\n",ct,storeID,err)
       }
     }
 
-    err= SendOrder(cookie ,storeID ,inv,false)
+    err= models.SendOrder(cookie ,storeID ,inv,false)
     if (err !=nil){
       fmt.Printf("ERROR Sending Order for %d iteration Store ID %s\n\tERROR=%v\n ",ct,storeID,err)
     }
@@ -150,15 +149,15 @@ func main() {
 
     time.Sleep(33 *time.Second)
     //fmt.Println("Current Inventory Length->",len(inv),"\nINV=>",inv)
-    inv = GetCurrentInventory(storeID)
+    inv = models.GetCurrentInventory(storeID)
 
     if(len(inv) < 15){
       fmt.Println("Current Inventory Length->",len(inv))
 
-      SendOrder(cookie ,storeID ,inv,true)
+      models.SendOrder(cookie ,storeID ,inv,true)
       time.Sleep(1 *time.Minute)
 
-      ni:=AddItemsToInventory(cookie,storeID)
+      ni:=models.AddItemsToInventory(cookie,storeID)
 
       fmt.Printf("\n\nAdding %d Items to Inventory->\n\n",len(ni))
       for i:=0;i<(len(ni)-1);i++ {
