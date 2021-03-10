@@ -56,7 +56,7 @@ var (
   password  = os.Getenv("DB_Password")
   db_name  = os.Getenv("DB_Name")
   port = os.Getenv("DB_Port")
-  storeID = os.Getenv("Store_ID")
+  //storeID = os.Getenv("Store_ID")
   //  mysql database core package Variables
   StageDB *sql.DB
   DbR *sql.DB
@@ -131,7 +131,7 @@ func main() {
   currentTime := time.Now()
   fmt.Println("Current Time in String: ", currentTime.String())
   fmt.Println("MM-DD-YYYY : ", currentTime.Format("01-02-2006"))
-  //storeID := flag.Arg(0)
+  storeID := flag.Arg(0)
   Time:= fmt.Sprintf("%v",currentTime.Format("20060102"))
   fmt.Printf("MM-DD-YYYY : ->%s<- For kiosk ->%s<-", Time,storeID)
 
