@@ -1,0 +1,87 @@
+insert y value here: 
+-> /Users/michaelluciano/erp-schema-out.sql <- Results in
+SETLINE-	mapType=SET	key=statement_timeout	->SET statement_timeout = 0;<--
+SETLINE-	mapType=SET	key=lock_timeout	->SET lock_timeout = 0;<--
+SETLINE-	mapType=SET	key=idle_in_transaction_session_timeout	->SET idle_in_transaction_session_timeout = 0;<--
+SETLINE-	mapType=SET	key=client_encoding	->SET client_encoding = 'UTF8';<--
+SETLINE-	mapType=SET	key=standard_conforming_strings	->SET standard_conforming_strings = on;<--
+SELECT pg_catalog.set_config('search_path', '', false);
+SETLINE-	mapType=SET	key=check_function_bodies	->SET check_function_bodies = false;<--
+SETLINE-	mapType=SET	key=xmloption	->SET xmloption = content;<--
+SETLINE-	mapType=SET	key=client_min_messages	->SET client_min_messages = warning;<--
+SETLINE-	mapType=SET	key=row_security	->SET row_security = off;<--
+SETLINE-	mapType=SET	key=default_tablespace	->SET default_tablespace = '';<--
+SETLINE-	mapType=SET	key=default_with_oids	->SET default_with_oids = false;<--
+CREATE SEQUENCE inm.product_property_def_id_seq
+CREATE SEQUENCE inm_test.even_id_id_seq
+CREATE SEQUENCE inm_test.even_id_seq
+CREATE SEQUENCE mixalot.card_product_fact_id_seq
+CREATE SEQUENCE mixalot.history_order_pipeline_id_seq
+CREATE SEQUENCE mixalot.inm_data_id_seq
+CREATE SEQUENCE mixalot.kiosk_contents_id_seq
+CREATE SEQUENCE mixalot.kiosk_fact_id_seq
+CREATE SEQUENCE mixalot.log_id_seq
+CREATE SEQUENCE mixalot.order_fact_id_seq
+CREATE SEQUENCE mixalot.product_fact_id_seq
+CREATE SEQUENCE mixalot.sku_group_def_id_seq
+CREATE SEQUENCE mixalot.sku_group_id_seq
+CREATE SEQUENCE mixalot.sku_group_member_id_seq
+CREATE SEQUENCE mixalot.sku_property_def_id_seq
+CREATE SEQUENCE mixalot.tmp_discount_applied_id_seq
+CREATE SEQUENCE mixalot.tmp_kiosk_status_id_seq
+CREATE SEQUENCE pantry.email_id_seq
+CREATE SEQUENCE pantry.empty_transaction_id_seq
+CREATE SEQUENCE pantry.history_epc_order_id_seq
+CREATE SEQUENCE pantry.inventory_request_id_seq
+CREATE SEQUENCE pantry.kiosk_catalog_downloads_id_seq
+CREATE SEQUENCE pantry.kiosk_components_history_id_seq
+CREATE SEQUENCE pantry.label_order_id_seq
+CREATE SEQUENCE pantry.pick_list_row_id_seq
+CREATE SEQUENCE pantry.temperature_tag_history_id_seq
+CREATE SEQUENCE public.awsdms_ddl_audit_c_key_seq
+CREATE SEQUENCE public.history_order_pipeline_id_seq
+CREATE SEQUENCE public.product_fact_id_seq
+CREATE SEQUENCE util.deps_saved_ddl_deps_id_seq
+SETLINE-	mapType=SET	key=SESSION	->SET SESSION AUTHORIZATION yann;<--
+RESET SESSION AUTHORIZATION;
+Done with file Read
+ 11817  number of lines
+Views:
+	CREATE VIEW : 113
+Totaling :  113
+Tables:
+	CREATE TABLE : 229
+	ALTER TABLE : 373
+Totaling :  602
+Functions:
+	CREATE FUNCTION : 88
+	ALTER FUNCTION : 88
+Totaling :  176
+Other:
+	CREATE SEQUENCE : 30
+	CREATE TRIGGER BEFORE : 1
+	GRANT ALL : 4
+	REVOKE ALL SCHEMA : 1
+	GRANT INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE : 1
+	ALTER DOMAIN : 1
+	GRANT USAGE : 1
+	GRANT SELECT : 1
+	SELECT pg_catalog.set_config('search_path', : 1
+	CREATE UNIQUE tag_type_type_key : 1
+	CREATE EVENT awsdms_intercept_ddl : 1
+	ALTER DEFAULT : 1
+	CREATE DOMAIN AS : 5
+	ALTER SEQUENCE : 1
+	CREATE INDEX ON : 11
+	CREATE UNIQUE client_id_contact_type : 1
+	ALTER EVENT : 1
+	RESET SESSION : 1
+	COMMENT ON : 106
+Totaling :  170
+Schemas:
+	CREATE SCHEMA : 16
+	ALTER SCHEMA : 16
+Totaling :  32
+Set:
+	SET : 12
+Totaling :  12

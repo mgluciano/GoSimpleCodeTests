@@ -1,0 +1,27 @@
+
+CREATE TRIGGER set_default_pick_date BEFORE INSERT ON inm_test.pick_inventory FOR EACH ROW EXECUTE PROCEDURE inm_test.pick_inventory_insert();
+CREATE TRIGGER discount_delete AFTER DELETE ON pantry.discount FOR EACH ROW EXECUTE PROCEDURE pantry.fn_discount_delete();
+CREATE TRIGGER product_update AFTER UPDATE ON pantry.product FOR EACH ROW EXECUTE PROCEDURE pantry.fn_product_update();
+CREATE TRIGGER trg_kiosk_service_version AFTER INSERT OR DELETE OR UPDATE ON pantry.kiosk_service_version FOR EACH ROW EXECUTE PROCEDURE pantry.fn_audit_kiosk_service_version();
+CREATE TRIGGER card_insert BEFORE INSERT ON pantry.card FOR EACH ROW EXECUTE PROCEDURE pantry.fn_card_insert();
+CREATE TRIGGER discount_update AFTER UPDATE ON pantry.discount FOR EACH ROW EXECUTE PROCEDURE pantry.fn_discount_update();
+CREATE TRIGGER label_update AFTER UPDATE ON pantry.label FOR EACH ROW EXECUTE PROCEDURE pantry.fn_label_update();
+CREATE TRIGGER trg_kiosk_attribute AFTER INSERT OR DELETE OR UPDATE ON pantry.kiosk_attribute FOR EACH ROW EXECUTE PROCEDURE pantry.fn_audit_kiosk_attribute();
+CREATE TRIGGER label_insert BEFORE INSERT ON pantry.label FOR EACH ROW EXECUTE PROCEDURE pantry.fn_label_insert();
+CREATE TRIGGER before_insert_product_stats_by_kiosk BEFORE INSERT ON pantry.product_stats_by_kiosk FOR EACH ROW EXECUTE PROCEDURE pantry.fn_product_stats_by_kiosk();
+CREATE TRIGGER before_insert_spoilage BEFORE INSERT ON pantry.spoilage FOR EACH ROW EXECUTE PROCEDURE pantry.fn_spoilage_insert();
+CREATE TRIGGER campus_insert AFTER INSERT ON pantry.campus FOR EACH ROW EXECUTE PROCEDURE pantry.fn_campus_insert();
+CREATE TRIGGER discount_insert AFTER INSERT ON pantry.discount FOR EACH ROW EXECUTE PROCEDURE pantry.fn_discount_insert();
+CREATE TRIGGER guardrails_ssl_cert_bytetech_co BEFORE INSERT OR UPDATE ON pantry.kiosk FOR EACH ROW EXECUTE PROCEDURE pantry.kiosk_guardrails_ssl_cert_bytetech_co();
+CREATE TRIGGER kiosk_audit_log_update BEFORE UPDATE ON pantry.kiosk FOR EACH ROW EXECUTE PROCEDURE pantry.fn_kiosk_audit_log_update();
+CREATE TRIGGER kiosk_status_insert BEFORE INSERT ON pantry.kiosk_status FOR EACH ROW EXECUTE PROCEDURE pantry.fn_kiosk_status_insert();
+CREATE TRIGGER order_insert AFTER INSERT ON pantry."order" FOR EACH ROW EXECUTE PROCEDURE pantry.fn_order_insert();
+CREATE TRIGGER trg_campus_attribute AFTER INSERT OR DELETE OR UPDATE ON pantry.campus_attribute FOR EACH ROW EXECUTE PROCEDURE pantry.fn_audit_campus_attribute();
+CREATE TRIGGER trg_global_attribute_def AFTER INSERT OR DELETE OR UPDATE ON pantry.global_attribute_def FOR EACH ROW EXECUTE PROCEDURE pantry.fn_audit_global_attribute_def();
+CREATE TRIGGER trg_kiosk_device AFTER INSERT OR DELETE OR UPDATE ON pantry.kiosk_device FOR EACH ROW EXECUTE PROCEDURE pantry.fn_audit_kiosk_device();
+CREATE TRIGGER kiosk_audit_log_insert AFTER INSERT ON pantry.kiosk FOR EACH ROW EXECUTE PROCEDURE pantry.fn_kiosk_audit_log_insert();
+CREATE TRIGGER kiosk_update AFTER UPDATE ON pantry.kiosk FOR EACH ROW EXECUTE PROCEDURE pantry.fn_kiosk_update();
+CREATE TRIGGER label_delete AFTER DELETE ON pantry.label FOR EACH ROW EXECUTE PROCEDURE pantry.fn_label_delete();
+CREATE TRIGGER order_update AFTER UPDATE ON pantry."order" FOR EACH ROW EXECUTE PROCEDURE pantry.fn_order_update();
+CREATE TRIGGER product_delete AFTER DELETE ON pantry.product FOR EACH ROW EXECUTE PROCEDURE pantry.fn_product_delete();
+CREATE TRIGGER product_insert AFTER INSERT ON pantry.product FOR EACH ROW EXECUTE PROCEDURE pantry.fn_product_insert();

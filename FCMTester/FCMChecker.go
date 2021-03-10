@@ -54,11 +54,23 @@ const  (
 
 
 func main() {
-  fmt.Println("HERE")
+  fmt.Println("Starting Application")
+  //  Warn if DB attributes are not established in Bash
+  if(DB_W_Host ==""){
+    fmt.Println(`Must Define Needed DB Attributes including:
+       DB_W_Host
+       DB_R_Host
+       DB_User
+       DB_Password
+       DB_Port`)
+    return
+  }
+  // Create DB Connection
   InitDB()
 
+  // Get Current Time also verify DB connection
   time,err := GetDBTime();
-  fmt.Println("HERE2")
+
 
   if (err != nil){
     fmt.Println("ERRROR ",err)
@@ -70,40 +82,47 @@ func main() {
   Xfile  := xlsx.NewFile()
   sheet, _ := Xfile.AddSheet("Results")
 
-//  fmt.Println("Row1->",WriteRow([]string{"","","1.0","","1.1","","","1.2",""},sheet))
+  // Write initial Header Row To Results sheet in the New Excel Sheet
   fmt.Println("Row1->",WriteRow([]string{"Store ID","TimeStamp","FCM","ErrorLoginFound"},sheet))
 
+  // Grab passed file name
   flag.Parse()
   inputf := flag.Arg(0)
   fmt.Println(inputf)
-    file, err := os.Open(inputf)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer file.Close()
 
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {             // internally, it advances token based on sperator
-      s := strings.Split(scanner.Text(),"\t");
-      fmt.Printf("->%s<-,->%s<-\n",s[0],s[1])  // token in unicode-char
-      //success,time,error := RunFCM(storeID)
+  // OPEN File named inputf
+  file, err := os.Open(inputf)
+  if err != nil {
+      log.Fatal(err)
+  }
+  defer file.Close()
 
-       r1,r2 := GetRecentLoginsCheckDB(s[1], s[0])
-       fmt.Printf("id=%s,Time=%s,DBFound=%s,Error=%s",s[0],s[1],r1,r2)
-      _ = WriteRow([]string{s[0],s[1],r1,r2},sheet)
+  //read and parse through file line by line
+  scanner := bufio.NewScanner(file)
+  for scanner.Scan() {             // internally, it advances token based on sperator
+    //Split line on Tab
+    s := strings.Split(scanner.Text(),"\t");
+    //fmt.Printf("->%s<-,->%s<-\n",s[0],s[1])  // token in unicode-char
+
+     r1,r2 := GetRecentLoginsCheckDB(s[1], s[0])
+     fmt.Printf("id=%s,Time=%s,DBFound=%s,Error=%s",s[0],s[1],r1,r2)
+    _ = WriteRow([]string{s[0],s[1],r1,r2},sheet)
 
 
-    } // End of for scanner.Scan()
+  } // End of for scanner.Scan()
 
-
-    err = Xfile.Save(inputf+".xlsx")
-    if err != nil {
-      fmt.Printf(err.Error())
-    }
+  /// Save Excel file from Excel object / data set
+  err = Xfile.Save(inputf+".xlsx")
+  if err != nil {
+    fmt.Printf(err.Error())
+  }
 
 }
 
-
+/*
+ writes sent Slice of strings to passed Excel sheets
+ Returns bool true or false
+*/
 func WriteRow (text []string,sheet *xlsx.Sheet ) (bool){
   var row *xlsx.Row
   var cell *xlsx.Cell
@@ -119,127 +138,23 @@ func WriteRow (text []string,sheet *xlsx.Sheet ) (bool){
     return true
 }
 
+/*
+    GetRecentLoginsCheckDB Checks DB for number of logins since the provided time timestampParser
+    Inputs:
+      Time FCM request was made and DB was sent From File.
+      Store ID (aka Kiosk ID)
 
-func RunFCM(storeID string) (string,string,string){
-
-    tr := &http.Transport{
-        TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-    }
-
-    serialID,fcmID,err2 := GetkioskFCM(storeID)
-    if(err2 != nil){
-      fmt.Println("ERROR getting ",storeID,"Error=",err2)
-      return storeID,"",fmt.Sprintf("ERROR getting FCM ",err2)
-;
-    }
-
-
-    client := &http.Client{Transport: tr}
-    header :=`key=AAAATKW7t-w:APA91bF_vibuFDT-3tquKuANxZfAFTIUBxSC_RGHUgqopcRgHryUXiKcv_BmmukTLo_tYUd7ZhodBJ1sLO4UjiV77wjoXf0k7qGbqNrmghiJS_LrHTgEXJHlVB-ni2Pp22nXeWF7FUFE`
-    var Jsonbody = []byte(`{
-      "registration_ids": ["`+fcmID+`"],
-      "data": {
-          "serial": "`+serialID+`",
-          "message": "send_status"
-      }
-    }`)
-
-    aurl1 := "https://fcm.googleapis.com/fcm/send"
-    fmt.Println(aurl1,string(Jsonbody))  // token in unicode-char
-
-    req, err01 := http.NewRequest("POST", aurl1, bytes.NewBuffer(Jsonbody))
-//        req, err01 := http.NewRequest("POST", aurl1, body)
-
-    if err01 != nil {
-      fmt.Println("ERROR",err01)  // token in unicode-char
-      return storeID,"",fmt.Sprintf("ERROR getting FCM ",err01)
-
-    }
-
-    req.Header.Add("Authorization", header)
-    req.Header.Add("Content-Type", "application/json")
-
-
-    res,err1 := client.Do(req)
-  //      fmt.Println("BERROR2",err1)  // token in unicode-char
-    if err1 != nil {
-      fmt.Println("ERROR2",err1)  // token in unicode-char
-    }
-
-    defer res.Body.Close()
-
-    body, err3 :=  ioutil.ReadAll(res.Body)
-    if err3 != nil {
-      fmt.Println("ERROR3",err3)  // token in unicode-char
-      return storeID,"",fmt.Sprintf("ERROR getting FCM ",err3)
-
-    }
-    var ret string
-    json.Unmarshal(body,&ret)
-    fmt.Printf("RES=\nret=%s\nres=%s\nbody=%s\n",ret,res,string(body))
-
-    expected := regexp.MustCompile(`^\{"multicast_id"\:\d+,"success"\:1,"failure":0,"canonical_ids"\:0,"results"\:\[\{"message_id"\:"[^"]+"\}\]\}$`)
-    if !expected.MatchString(string(body)) {
-      return storeID,"","FCM Did Not Succeed "
-    }
-
-    time, rerr := GetDBTime()
-    if rerr != nil {
-      return ret, time, fmt.Sprintf("ErrorGettingTime=%v",rerr)
-
-    }
-    return "Success", time, "No Error"
-
-}
-
-func GetDBTime() (string,error){
-
-
-  sql := `SELECT NOW()`
-  rows, err := DbR.Query(sql)
-  if err != nil {
-      log.Print("in Get Time error")
-      return "", err
-  }
-  defer rows.Close()
-  if err != nil {
-    fmt.Printf("ERROR in GetDBTime SELECT %v\n",err)
-    return "",err
-  }
-
-  rows.Next()
-  var time string
-  err = rows.Scan(&time)
-
-  return time,err
-}
-
-func GetkioskFCM(storeID string) (string,string,error){
-
-
-  sql := `select pk.serial,pk.gcm_id
-    FROM pantry.kiosk pk where pk."id" =`+storeID
-  rows, err := DbR.Query(sql)
-  if err != nil {
-    fmt.Println("in GetkioskFCM error",err)
-    return "", "", err
-  }
-  defer rows.Close()
-
-  rows.Next()
-  var serialID string
-  var fcmID string
-  err = rows.Scan(&serialID,&fcmID)
-
-  return serialID,fcmID,err
-}
-
+     Returns Two Strings:
+      1st string indicates "true" or "false' saying if a login happened
+      2nd string shows count of the number of logins and any error messages.
+*/
 func GetRecentLoginsCheckDB(time string,store string) (string, string){
-
+//
   sql := `select count(1)
 FROM mixalot.request_log mrl
 WHERE mrl.kiosk_id='` + store +`' AND mrl.start_ts>'`+ time +
 `' AND mrl.endpoint='/status'`
+//`' AND mrl.endpoint='/status'`
 //`' AND mrl.endpoint='/login'`//
     rows, err := DbR.Query(sql)
     if err != nil {

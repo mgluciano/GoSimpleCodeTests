@@ -1,0 +1,284 @@
+183298-discounted Price 2.5 2.5
+183323-discounted Price 4 4
+183344-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+183449-Item= price=3,discountedPrice=1.5,sku=9382
+183492:I=0,9382->HERE->9382NO MATCH 3.000000 has a Dprice->1.500000
+183553-map[categoryId:1076 discountedPrice:1.5 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:86 price:3 shelfLifeDays:90 sku:9382]
+183736-I=1,9382->I=2,9382->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+183861-Item= price=2.5,discountedPrice=1.25,sku=9362
+--
+183553-map[categoryId:1076 discountedPrice:1.5 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:86 price:3 shelfLifeDays:90 sku:9382]
+183736-I=1,9382->I=2,9382->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+183861-Item= price=2.5,discountedPrice=1.25,sku=9362
+183907:I=0,9362->I=1,9362->HERE->9362NO MATCH 2.500000 has a Dprice->1.250000
+183978-map[categoryId:4298 discountedPrice:1.25 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:82 price:2.5 shelfLifeDays:90 sku:9362]
+184164-I=2,9362->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+184279-Item= price=4,discountedPrice=2,sku=9365
+--
+183978-map[categoryId:4298 discountedPrice:1.25 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:82 price:2.5 shelfLifeDays:90 sku:9362]
+184164-I=2,9362->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+184279-Item= price=4,discountedPrice=2,sku=9365
+184320:I=0,9365->I=1,9365->I=2,9365->HERE->9365NO MATCH 4.000000 has a Dprice->2.000000
+184401-map[categoryId:3830 discountedPrice:2 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:0 price:4 shelfLifeDays:5 sku:9365]
+184580-MARSHAL3-> {"orderId":"2403QCLV98","items":[{"sku":"9382","categoryId":"1076","price":3,"discountedPrice":1.5,"shelfLifeDays":90,"expiresInDays":86},{"sku":"9362","categoryId":"4298","price":2.5,"discountedPrice":1.25,"shelfLifeDays":90,"expiresInDays":82},{"sku":"9365","categoryId":"3830","price":4,"discountedPrice":2,"shelfLifeDays":5,"expiresInDays":0}],"time":"2020-06-27 17:17:32-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+185027-
+185028-
+--
+--
+261103-discounted Price 6 6
+261124-discounted Price 4.95 4.95
+261151-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+261256-Item= price=6,discountedPrice=3,sku=9278
+261297:I=0,9278->HERE->9278NO MATCH 6.000000 has a Dprice->3.000000
+261358-map[categoryId:374 discountedPrice:3 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:1 price:6 shelfLifeDays:5 sku:9278]
+261536-I=1,9278->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+261651-Item= price=4.95,discountedPrice=2.48,sku=9277
+--
+261358-map[categoryId:374 discountedPrice:3 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:1 price:6 shelfLifeDays:5 sku:9278]
+261536-I=1,9278->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+261651-Item= price=4.95,discountedPrice=2.48,sku=9277
+261698:I=0,9277->I=1,9277->HERE->9277NO MATCH 4.950000 has a Dprice->2.480000
+261769-map[categoryId:5483 discountedPrice:2.48 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:0 price:4.95 shelfLifeDays:5 sku:9277]
+261954-MARSHAL3-> {"orderId":"2403QCLULI","items":[{"sku":"9278","categoryId":"374","price":6,"discountedPrice":3,"shelfLifeDays":5,"expiresInDays":1},{"sku":"9277","categoryId":"5483","price":4.95,"discountedPrice":2.48,"shelfLifeDays":5,"expiresInDays":0}],"time":"2020-06-27 17:03:18-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+262294-
+262295-
+--
+--
+299377-discounted Price 0 2.5
+299400-discounted Price 4 4
+299421-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+299526-Item= price=3,discountedPrice=1.5,sku=9382
+299569:I=0,9382->HERE->9382NO MATCH 3.000000 has a Dprice->1.500000
+299630-map[categoryId:1076 discountedPrice:1.5 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:86 price:3 shelfLifeDays:90 sku:9382]
+299813-I=1,9382->I=2,9382->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+299938-Item= price=2.5,discountedPrice=1.25,sku=9362
+--
+299630-map[categoryId:1076 discountedPrice:1.5 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:86 price:3 shelfLifeDays:90 sku:9382]
+299813-I=1,9382->I=2,9382->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+299938-Item= price=2.5,discountedPrice=1.25,sku=9362
+299984:I=0,9362->I=1,9362->HERE->9362NO MATCH 2.500000 has a Dprice->1.250000
+300055-map[categoryId:4298 discountedPrice:1.25 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:82 price:2.5 shelfLifeDays:90 sku:9362]
+300241-I=2,9362->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+300356-Item= price=4,discountedPrice=2,sku=9365
+--
+300055-map[categoryId:4298 discountedPrice:1.25 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:82 price:2.5 shelfLifeDays:90 sku:9362]
+300241-I=2,9362->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+300356-Item= price=4,discountedPrice=2,sku=9365
+300397:I=0,9365->I=1,9365->I=2,9365->HERE->9365NO MATCH 4.000000 has a Dprice->2.000000
+300478-map[categoryId:3830 discountedPrice:2 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:0 price:4 shelfLifeDays:5 sku:9365]
+300657-MARSHAL3-> {"orderId":"2403QCLV98","items":[{"sku":"9382","categoryId":"1076","price":3,"discountedPrice":1.5,"shelfLifeDays":90,"expiresInDays":86},{"sku":"9362","categoryId":"4298","price":2.5,"discountedPrice":1.25,"shelfLifeDays":90,"expiresInDays":82},{"sku":"9365","categoryId":"3830","price":4,"discountedPrice":2,"shelfLifeDays":5,"expiresInDays":0}],"time":"2020-06-27 17:17:32-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+301104-
+301105-
+--
+--
+301629-discounted Price 6 6
+301650-discounted Price 4.95 4.95
+301677-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+301782-Item= price=6,discountedPrice=3,sku=9278
+301823:I=0,9278->HERE->9278NO MATCH 6.000000 has a Dprice->3.000000
+301884-map[categoryId:374 discountedPrice:3 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:1 price:6 shelfLifeDays:5 sku:9278]
+302062-I=1,9278->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+302177-Item= price=4.95,discountedPrice=2.48,sku=9277
+--
+301884-map[categoryId:374 discountedPrice:3 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:1 price:6 shelfLifeDays:5 sku:9278]
+302062-I=1,9278->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]]
+302177-Item= price=4.95,discountedPrice=2.48,sku=9277
+302224:I=0,9277->I=1,9277->HERE->9277NO MATCH 4.950000 has a Dprice->2.480000
+302295-map[categoryId:5483 discountedPrice:2.48 discounts:[map[coupon:<nil> id:333f1fd5-5515-43d7-a4c7-48f6b42a8e05 name:Saturday Grubbs]] expiresInDays:0 price:4.95 shelfLifeDays:5 sku:9277]
+302480-MARSHAL3-> {"orderId":"2403QCLULI","items":[{"sku":"9278","categoryId":"374","price":6,"discountedPrice":3,"shelfLifeDays":5,"expiresInDays":1},{"sku":"9277","categoryId":"5483","price":4.95,"discountedPrice":2.48,"shelfLifeDays":5,"expiresInDays":0}],"time":"2020-06-27 17:03:18-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+302820-
+302821-
+--
+--
+2197179-
+2197180-discounted Price 5.75 5.75
+2197207-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:496d1648-8cec-4dc1-bd33-7bfb8a7b86df name:4th of July Happy Hour]]
+2197319-Item= price=5.75,discountedPrice=4.03,sku=8957
+2197366:I=0,8957->HERE->8957NO MATCH 5.750000 has a Dprice->4.030000
+2197427-map[categoryId:3830 discountedPrice:4.03 discounts:[map[coupon:<nil> id:496d1648-8cec-4dc1-bd33-7bfb8a7b86df name:4th of July Happy Hour]] expiresInDays:0 price:5.75 shelfLifeDays:7 sku:8957]
+2197619-MARSHAL3-> {"orderId":"2224QCV2O4","items":[{"sku":"8957","categoryId":"3830","price":5.75,"discountedPrice":4.03,"shelfLifeDays":7,"expiresInDays":0}],"time":"2020-07-02 16:36:04-05:00","storeId":"2224","clientId":"397","couponCodes":""} 
+2197859-
+2197860-
+--
+--
+2487116-discounted Price 0 2.75
+2487140-discounted Price 8 8
+2487161-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2487273-Item= price=2.75,discountedPrice=1.93,sku=8704
+2487320:I=0,8704->HERE->8704NO MATCH 2.750000 has a Dprice->1.930000
+2487381-map[categoryId:3826 discountedPrice:1.93 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:2.75 shelfLifeDays:14 sku:8704]
+2487574-I=1,8704->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2487696-Item= price=8,discountedPrice=5.6,sku=8173
+--
+2487381-map[categoryId:3826 discountedPrice:1.93 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:2.75 shelfLifeDays:14 sku:8704]
+2487574-I=1,8704->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2487696-Item= price=8,discountedPrice=5.6,sku=8173
+2487739:I=0,8173->I=1,8173->HERE->8173NO MATCH 8.000000 has a Dprice->5.600000
+2487810-map[categoryId:113 discountedPrice:5.6 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:1 price:8 shelfLifeDays:3 sku:8173]
+2487997-MARSHAL3-> {"orderId":"2222QCWTNI","items":[{"sku":"8704","categoryId":"3826","price":2.75,"discountedPrice":1.93,"shelfLifeDays":14,"expiresInDays":0},{"sku":"8173","categoryId":"113","price":8,"discountedPrice":5.6,"shelfLifeDays":3,"expiresInDays":1}],"time":"2020-07-03 15:16:30-05:00","storeId":"2222","clientId":"397","couponCodes":""} 
+2488340-
+2488341-
+--
+--
+2490722-discounted Price 0 2.5
+2490745-discounted Price 0 8
+2490766-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2490878-Item= price=2.5,discountedPrice=1.75,sku=8282
+2490924:I=0,8282->HERE->8282NO MATCH 2.500000 has a Dprice->1.750000
+2490985-map[categoryId:3830 discountedPrice:1.75 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:2.5 shelfLifeDays:5 sku:8282]
+2491176-I=1,8282->I=2,8282->I=3,8282->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2491318-Item= price=1.99,discountedPrice=1.39,sku=8164
+--
+2490985-map[categoryId:3830 discountedPrice:1.75 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:2.5 shelfLifeDays:5 sku:8282]
+2491176-I=1,8282->I=2,8282->I=3,8282->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2491318-Item= price=1.99,discountedPrice=1.39,sku=8164
+2491365:I=0,8164->I=1,8164->HERE->8164NO MATCH 1.990000 has a Dprice->1.390000
+2491436-map[categoryId:4293 discountedPrice:1.39 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:7 price:1.99 shelfLifeDays:7 sku:8164]
+2491628-I=2,8164->I=3,8164->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2491760-Item= price=2.5,discountedPrice=1.75,sku=8669
+--
+2491436-map[categoryId:4293 discountedPrice:1.39 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:7 price:1.99 shelfLifeDays:7 sku:8164]
+2491628-I=2,8164->I=3,8164->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2491760-Item= price=2.5,discountedPrice=1.75,sku=8669
+2491806:I=0,8669->I=1,8669->I=2,8669->HERE->8669NO MATCH 2.500000 has a Dprice->1.750000
+2491887-map[categoryId:3826 discountedPrice:1.75 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:2.5 shelfLifeDays:7 sku:8669]
+2492078-I=3,8669->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2492200-Item= price=8,discountedPrice=5.6,sku=8166
+--
+2491887-map[categoryId:3826 discountedPrice:1.75 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:2.5 shelfLifeDays:7 sku:8669]
+2492078-I=3,8669->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2492200-Item= price=8,discountedPrice=5.6,sku=8166
+2492243:I=0,8166->I=1,8166->I=2,8166->I=3,8166->HERE->8166NO MATCH 8.000000 has a Dprice->5.600000
+2492334-map[categoryId:113 discountedPrice:5.6 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:1 price:8 shelfLifeDays:4 sku:8166]
+2492521-MARSHAL3-> {"orderId":"2221QCWTZ1","items":[{"sku":"8282","categoryId":"3830","price":2.5,"discountedPrice":1.75,"shelfLifeDays":5,"expiresInDays":0},{"sku":"8164","categoryId":"4293","price":1.99,"discountedPrice":1.39,"shelfLifeDays":7,"expiresInDays":7},{"sku":"8669","categoryId":"3826","price":2.5,"discountedPrice":1.75,"shelfLifeDays":7,"expiresInDays":0},{"sku":"8166","categoryId":"113","price":8,"discountedPrice":5.6,"shelfLifeDays":4,"expiresInDays":1}],"time":"2020-07-03 15:23:25-05:00","storeId":"2221","clientId":"397","couponCodes":""} 
+2493075-
+2493076-
+--
+--
+2496827-
+2496828-discounted Price 9.95 9.95
+2496855-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]]
+2496948-Item= price=9.95,discountedPrice=4.98,sku=9346
+2496995:I=0,9346->HERE->9346NO MATCH 9.950000 has a Dprice->4.980000
+2497056-map[categoryId:374 discountedPrice:4.98 discounts:[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]] expiresInDays:1 price:9.95 shelfLifeDays:5 sku:9346]
+2497228-MARSHAL3-> {"orderId":"2403QCWTUB","items":[{"sku":"9346","categoryId":"374","price":9.95,"discountedPrice":4.98,"shelfLifeDays":5,"expiresInDays":1}],"time":"2020-07-03 15:20:35-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+2497467-
+2497468-
+--
+--
+2500575-
+2500576-discounted Price 8 8
+2500597-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2500709-Item= price=8,discountedPrice=5.6,sku=8173
+2500752:I=0,8173->HERE->8173NO MATCH 8.000000 has a Dprice->5.600000
+2500813-map[categoryId:113 discountedPrice:5.6 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:8 shelfLifeDays:3 sku:8173]
+2501000-MARSHAL3-> {"orderId":"2221QCWTAQ","items":[{"sku":"8173","categoryId":"113","price":8,"discountedPrice":5.6,"shelfLifeDays":3,"expiresInDays":0}],"time":"2020-07-03 15:08:50-05:00","storeId":"2221","clientId":"397","couponCodes":""} 
+2501235-
+2501236-
+--
+--
+2512600-
+2512601-discounted Price 0 2
+2512622-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2512734-Item= price=2,discountedPrice=1.4,sku=8283
+2512777:I=0,8283->HERE->8283NO MATCH 2.000000 has a Dprice->1.400000
+2512838-map[categoryId:3830 discountedPrice:1.4 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:3 price:2 shelfLifeDays:3 sku:8283]
+2513026-MARSHAL3-> {"orderId":"2221QCWVPF","items":[{"sku":"8283","categoryId":"3830","price":2,"discountedPrice":1.4,"shelfLifeDays":3,"expiresInDays":3}],"time":"2020-07-03 16:00:51-05:00","storeId":"2221","clientId":"397","couponCodes":""} 
+2513262-
+2513263-
+--
+--
+2514283-MARSHAL3-> {"orderId":"2404QCWW8Q","items":[{"sku":"9382","categoryId":"1076","price":3,"discountedPrice":3,"shelfLifeDays":90,"expiresInDays":86}],"time":"2020-07-03 16:12:26-05:00","storeId":"2404","clientId":"445","couponCodes":""} 
+2514519-
+2514520-
+2514521-discounted Price 5 3.75
+2514545:I=0,8220->HERE->8220NO MATCH 3.750000 has a Dprice->5.000000
+2514606-map[categoryId:113 discountedPrice:5 discounts:[] expiresInDays:2 price:5 shelfLifeDays:3 sku:8220]
+2514706-MARSHAL3-> {"orderId":"1958QCWW9O","items":[{"sku":"8220","categoryId":"113","price":5,"discountedPrice":5,"shelfLifeDays":3,"expiresInDays":2}],"time":"2020-07-03 17:13:00-04:00","storeId":"1958","clientId":"401","couponCodes":""} 
+2514939-
+2514940-
+--
+--
+2514940-
+2514941-discounted Price 8 8
+2514962-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]]
+2515074-Item= price=8,discountedPrice=5.6,sku=8173
+2515117:I=0,8173->HERE->8173NO MATCH 8.000000 has a Dprice->5.600000
+2515178-map[categoryId:113 discountedPrice:5.6 discounts:[map[coupon:<nil> id:d4b5c2b0-fa9f-476c-a33f-7f7fb5ad5b7e name:4th of July Happy Hour]] expiresInDays:0 price:8 shelfLifeDays:3 sku:8173]
+2515365-MARSHAL3-> {"orderId":"2220QCWVLY","items":[{"sku":"8173","categoryId":"113","price":8,"discountedPrice":5.6,"shelfLifeDays":3,"expiresInDays":0}],"time":"2020-07-03 15:58:46-05:00","storeId":"2220","clientId":"397","couponCodes":""} 
+2515600-
+2515601-
+--
+--
+2520137-discounted Price 0 10.95
+2520162-I=0,9383->HERE->9383 has MATCH a Dprice->%f 3
+2520208-I=1,9383->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]]
+2520311-Item= price=10.95,discountedPrice=5.48,sku=9340
+2520359:I=0,9340->I=1,9340->HERE->9340NO MATCH 10.950000 has a Dprice->5.480000
+2520431-map[categoryId:3827 discountedPrice:5.48 discounts:[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]] expiresInDays:1 price:10.95 shelfLifeDays:5 sku:9340]
+2520605-MARSHAL3-> {"orderId":"2403QCWWSF","items":[{"sku":"9383","categoryId":"3826","price":3,"discountedPrice":3,"shelfLifeDays":90,"expiresInDays":89},{"sku":"9340","categoryId":"3827","price":10.95,"discountedPrice":5.48,"shelfLifeDays":5,"expiresInDays":1}],"time":"2020-07-03 16:24:15-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+2520949-
+2520950-
+--
+--
+2545546-
+2545547-discounted Price 8 8
+2545568-DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]]
+2545661-Item= price=8,discountedPrice=4,sku=9280
+2545702:I=0,9280->HERE->9280NO MATCH 8.000000 has a Dprice->4.000000
+2545763-map[categoryId:374 discountedPrice:4 discounts:[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]] expiresInDays:0 price:8 shelfLifeDays:5 sku:9280]
+2545929-MARSHAL3-> {"orderId":"2403QCX25C","items":[{"sku":"9280","categoryId":"374","price":8,"discountedPrice":4,"shelfLifeDays":5,"expiresInDays":0}],"time":"2020-07-03 18:20:00-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+2546162-
+2546163-
+--
+--
+2562973-discounted Price 0 6.95
+2562997-I=0,9383->HERE->9383 has MATCH a Dprice->%f 3
+2563043-I=1,9383->I=2,9383->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]]
+2563156-Item= price=9.95,discountedPrice=4.98,sku=9327
+2563203:I=0,9327->I=1,9327->HERE->9327NO MATCH 9.950000 has a Dprice->4.980000
+2563274-map[categoryId:374 discountedPrice:4.98 discounts:[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]] expiresInDays:0 price:9.95 shelfLifeDays:5 sku:9327]
+2563446-I=2,9327->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]]
+2563549-Item= price=6.95,discountedPrice=3.48,sku=9330
+--
+2563274-map[categoryId:374 discountedPrice:4.98 discounts:[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]] expiresInDays:0 price:9.95 shelfLifeDays:5 sku:9327]
+2563446-I=2,9327->DISCOUNT FOUND V!=[]	 v=[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]]
+2563549-Item= price=6.95,discountedPrice=3.48,sku=9330
+2563596:I=0,9330->I=1,9330->I=2,9330->HERE->9330NO MATCH 6.950000 has a Dprice->3.480000
+2563677-map[categoryId:3827 discountedPrice:3.48 discounts:[map[coupon:<nil> id:d50836e8-c4ae-4bfe-b9e5-1fe3931eafb9 name:4th]] expiresInDays:0 price:6.95 shelfLifeDays:5 sku:9330]
+2563850-MARSHAL3-> {"orderId":"2403QCX37L","items":[{"sku":"9383","categoryId":"3826","price":3,"discountedPrice":3,"shelfLifeDays":90,"expiresInDays":88},{"sku":"9327","categoryId":"374","price":9.95,"discountedPrice":4.98,"shelfLifeDays":5,"expiresInDays":0},{"sku":"9330","categoryId":"3827","price":6.95,"discountedPrice":3.48,"shelfLifeDays":5,"expiresInDays":0}],"time":"2020-07-03 18:42:57-05:00","storeId":"2403","clientId":"445","couponCodes":""} 
+2564299-
+2564300-
+--
+--
+3061441-
+3061442-
+3061443-discounted Price 5.99 4.19
+3061470-discounted Price 0 1.99
+3061494:I=0,8241->HERE->8241NO MATCH 4.190000 has a Dprice->5.990000
+3061555-map[categoryId:5483 discountedPrice:5.99 discounts:[] expiresInDays:1 price:5.99 shelfLifeDays:7 sku:8241]
+3061662-I=1,8241->I=0,8452->I=1,8452->HERE->8452 has MATCH a Dprice->%f 1.99
+3061731-MARSHAL3-> {"orderId":"1912QD2FZM","items":[{"sku":"8241","categoryId":"5483","price":5.99,"discountedPrice":5.99,"shelfLifeDays":7,"expiresInDays":1},{"sku":"8452","categoryId":"3830","price":1.99,"discountedPrice":1.99,"shelfLifeDays":35,"expiresInDays":15}],"time":"2020-07-06 17:06:58-04:00","storeId":"1912","clientId":"393","couponCodes":""} 
+3062080-
+--
+--
+3168793-MARSHAL3-> {"orderId":"1009QD2CU8","items":[{"sku":"2350","categoryId":"120","price":5.99,"discountedPrice":5.99,"shelfLifeDays":30,"expiresInDays":24}],"time":"2020-07-06 12:58:56-07:00","storeId":"1009","clientId":"87","couponCodes":""} 
+3169033-
+3169034-
+3169035-discounted Price 0 4.19
+3169059:I=0,7824->HERE->7824NO MATCH 4.190000 has a Dprice->5.990000
+3169120-map[categoryId:4290 discountedPrice:5.99 discounts:[] expiresInDays:1 price:5.99 shelfLifeDays:7 sku:7824]
+3169227-MARSHAL3-> {"orderId":"1783QD2HBU","items":[{"sku":"7824","categoryId":"4290","price":5.99,"discountedPrice":5.99,"shelfLifeDays":7,"expiresInDays":1}],"time":"2020-07-06 17:35:54-04:00","storeId":"1783","clientId":"393","couponCodes":""} 
+3169467-
+3169468-
+--
+--
+3193551-MARSHAL3-> {"orderId":"2016QD2HWS","items":[{"sku":"8331","categoryId":"3830","price":3.95,"discountedPrice":3.95,"shelfLifeDays":5,"expiresInDays":5}],"time":"2020-07-06 14:48:28-07:00","storeId":"2016","clientId":"337","couponCodes":""} 
+3193791-
+3193792-
+3193793-discounted Price 6.99 4.89
+3193820:I=0,7919->HERE->7919NO MATCH 4.890000 has a Dprice->6.990000
+3193881-map[categoryId:3827 discountedPrice:6.99 discounts:[] expiresInDays:1 price:6.99 shelfLifeDays:7 sku:7919]
+3193988-MARSHAL3-> {"orderId":"1917QD2I60","items":[{"sku":"7919","categoryId":"3827","price":6.99,"discountedPrice":6.99,"shelfLifeDays":7,"expiresInDays":1}],"time":"2020-07-06 17:54:00-04:00","storeId":"1917","clientId":"393","couponCodes":""} 
+3194228-
+3194229-

@@ -1,3 +1,277 @@
 Rebuilding Kiosk_Simulatror 
 Rebuilding Kiosk_Simulatror 
 Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Rebuilding Kiosk_Simulatror 
+Current Time in String:  2021-03-10 02:38:42.5189174 +0000 UTC m=+0.002017401
+MM-DD-YYYY :  03-10-2021
+MM-DD-YYYY : ->20210310<- For kiosk ->790<-In IntiDB
+V=host= port= user= password= dbname= sslmode=disable
+2021/03/10 02:38:42 Successfuly Connected to --><--
+V=host=stg-iot-master.bytetech.co port= user=dbservice password=bghbzz79bML4 dbname= sslmode=disable
+2021/03/10 02:38:42 Bad Ping Here in Error InitDB dial tcp: address tcp/user=dbservice: unknown port
+2021/03/10 02:38:42 Bad 2 Ping Here in Error InitDB dial tcp: address tcp/user=dbservice: unknown port
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+in KioskLoginFromProd error dial tcp: lookup port=: no such host
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+in KioskLoginFromProd error dial tcp: lookup port=: no such host
+Could Not Get Production Login For store 790 
+ERROR=> dial tcp: lookup port=: no such host
+Rebuilding Kiosk_Simulatror 
+Current Time in String:  2021-03-10 02:40:18.8450804 +0000 UTC m=+0.001235301
+MM-DD-YYYY :  03-10-2021
+MM-DD-YYYY : ->20210310<- For kiosk ->790<-In IntiDB
+V=host= port=5432 user= password= dbname= sslmode=disable
+2021/03/10 02:40:18 Successfuly Connected to --><--
+V=host=stg-iot-master.bytetech.co port=5432 user=dbservice password=bghbzz79bML4 dbname= sslmode=disable
+2021/03/10 02:40:18 Bad Ping Here in Error InitDB pq: database "sslmode=disable" does not exist
+2021/03/10 02:40:18 Bad 2 Ping Here in Error InitDB pq: database "sslmode=disable" does not exist
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+in KioskLoginFromProd error dial tcp: lookup port=5432: no such host
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+in KioskLoginFromProd error dial tcp: lookup port=5432: no such host
+Could Not Get Production Login For store 790 
+ERROR=> dial tcp: lookup port=5432: no such host
+Rebuilding Kiosk_Simulatror 
+Current Time in String:  2021-03-10 02:42:05.9779825 +0000 UTC m=+0.001205201
+MM-DD-YYYY :  03-10-2021
+MM-DD-YYYY : ->20210310<- For kiosk ->790<-In IntiDB
+V=host=prd-iot-slave.bytetech.co port=5432 user=dbservice password=e7Ws3VXCYHZk dbname=pantry sslmode=disable
+2021/03/10 02:42:06 Successfuly Connected to -->prd-iot-slave.bytetech.co<--
+V=host=stg-iot-master.bytetech.co port=5432 user=dbservice password=bghbzz79bML4 dbname=pantry sslmode=disable
+2021/03/10 02:42:06 Successfuly Connected to -->stg-iot-master.bytetech.co<--
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+HERE IN GetStgLoginCookie
+HERE 2 IN GetStgLoginCookie
+HERE 3 IN GetStgLoginCookie
+LoginBody{"default_currency":"USD","timezone":"US/Pacific","min_scans_required":null,"features":["coupon","pause_rfid_on_open_door","hide_prices","hwh","push_to_open"],"rfid_band":"US902","group_id":80,"default_preauth_amount":100,"kiosk_id":790,"max_charge_amount":null,"epay":null,"title":"Byte Technology - DF-I - East Wall","campus_id":87}
+
+head=map[Connection:[Keep-Alive] Content-Length:[334] Content-Type:[application/json] Date:[Wed, 10 Mar 2021 02:42:07 GMT] Keep-Alive:[timeout=5, max=100] Server:[Apache/2.4.18 (Ubuntu)] Set-Cookie:[pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDEyNywiZXhwIjoxNjE2MTUwNTI3fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.V5Pi1Yl4nKlUg8wKXa4gv9-34dLkqYrp6nc4Zb3E4tY] X-Api-Service:[Mixalot/API 0.03-ec2] X-Byte-Request-Stored:[1] X-Byte-Timestamp:[1615344127]]<-
+headcookie= -><-
+In GetCurrentInventoryRestock Function
+Current Inventory Length-> 34
+In Send Item Call req body= {
+	"epc": [
+
+		"000085110116008592410763",
+		"000061150116020677660476",
+		"000093690115986165420158",
+		"000061150116016412250705",
+		"000101810116073412700430",
+		"000093680116031054880410",
+		"000092310116055198880023",
+		"000061160116152326153240",
+		"000063160116152326159101",
+		"000026060116152326157252",
+		"000075800116152326156901",
+		"000061150115989658240587",
+		"000040610116082000540695",
+		"000040610116082000540691",
+		"000040610116082000540690",
+		"000093690115986165420003",
+		"000092310116127898590920",
+		"000065750116135574190945",
+		"000056980116152326159749",
+		"000027840116116652220999",
+		"000027840116020713570078",
+		"000040610116082000540694",
+		"000042030116009465510533",
+		"000044040115839946140927",
+		"000081750116112376090821",
+		"000091730116025015570086",
+		"000101920116152326156406",
+		"000061630116152326158348",
+		"000071490115916261470703",
+		"000065750116071389770643",
+		"000093690116031089570698",
+		"000061150116020677660822",
+		"000074350116152326155028",
+		"000065690116031165630376"
+],
+	"time":1615344127,
+	"retry_count": 0
+}
+HERE 3 IN GetStgLoginCookie
+LoginBody[]
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '30 minutes'
+    AND rl.endpoint='/status' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+2021/03/10 02:42:07 Infinite Loop  1
+In GetCurrentInventoryRestock Function
+Current Inventory Length-> 34
+In SendStatusMessage Updating Time
+In SendStatusMessage Call EPOCH= 1615344127 pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDEyNywiZXhwIjoxNjE2MTUwNTI3fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.V5Pi1Yl4nKlUg8wKXa4gv9-34dLkqYrp6nc4Zb3E4tY
+{"gcm_id":"fUcDWMxL-sc:APA91bELOmRHqBkOr9cEZlzkfsFlm8lWSwFXgI5ipMMoP-R0ljaAkqXvLnWfgTgURTctxgABZykyn6qgKQdPoA4Qrys0_e_LLPr_D-BSQ-fpJC-boXNrkrW8tALzioRifEj51YRRrR-J","kiosk_id":790,"retry_queue_length":0,"num_transactions_pending_sync":0,"battery_level":100,"is_locked":false,"system_uptime":1349705922,"kiosk_temperature":0,"retry_count":0,"temperature_tags":[{"read_count":2,"read_avg":-3.43,"epc":"000047170115990579250149"},{"read_count":10,"read_avg":-0.68,"epc":"000047160115990534900120"}],"kiosk_temperature_count":0,"time":1615344127,"kit_temperature":0,"rfid_0":4352,"happy_hour":0,"rfid_1":3940,"power":0,"app_uptime":1342281728,"rfid_2":3983,"rfid_3":3980,"rfid_4":3433,"rfid_5":3436,"rfid_6":3433,"rfid_7":3443}
+HERE 3 IN GetStgLoginCookie
+LoginBody{"success":true}
+ALL Vals->num=1,a=8,b=10,c=6,d=9,create=1615344128
+Body=> {"coupon":"","created":1615344118,"currency":"USD","email":"Tester2487@tester.com","order_id":"790X18Y106P9","payment":{"card_pan":"4906514610","card_type":"unknown","first_name":"Joe128","ksn":"9011880B4D28B100027A","last_name":"Tester2487","magne_print":"EF31DD9395FECCF81D523161376A9D02749921BA7E74B6F7ADB8AEC276EB05392D1309620DC4EF00F2091C900F9B94205DBAB81A751E7597","magne_print_status":"61403000","track2":"CA420C6C23BE60AB2FFD6EB5AD13E75F4F47525E403D8734D1D05D242A0C22E30888276ED2DF4D70","validate":1},"payment_system":"Express","purchased_products": [],"stamp":1,"tablet_processing_done":0,"time":1615344128,"time_capture":1615344124,"time_closed":1615344124,"time_door_closed":1615344124,"time_door_opened":1615344121,"time_opened":1615344121,"time_preauth":1615344127}
+Cookie=>pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDEyNywiZXhwIjoxNjE2MTUwNTI3fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.V5Pi1Yl4nKlUg8wKXa4gv9-34dLkqYrp6nc4Zb3E4tY<=
+Body Length=778
+TransactionBody{"payment_status": "VALID", "nurse_id": null, "patient_id": null, "payment_error_code": null, "payment_error_code_message": null, "payment_error_code_message_user": null, "email": "Tester2487@tester.com"}
+In Send Item Call EPOCH= 1615344160 pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDEyNywiZXhwIjoxNjE2MTUwNTI3fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.V5Pi1Yl4nKlUg8wKXa4gv9-34dLkqYrp6nc4Zb3E4tY 000044040115839946140927
+In Send Item Call req body= {"retry_count":0,"time":1615344160,"epc":"000044040115839946140927","reading_cycle":101732,"order_id":"790X18Y106P9","reason":"add_to_order","direction":"out"} 
+HERE 3 IN GetStgLoginCookie
+LoginBody{"success":true}
+790X18Y106P9 Has Purchased_products  [{000044040115839946140927 1.99}]
+Body=> {"coupon":"","created":1615344118,"currency":"USD","email":"Tester2487@tester.com","order_id":"790X18Y106P9","payment":{"card_pan":"4906514610","card_type":"unknown","first_name":"Joe128","ksn":"9011880B4D28B100027A","last_name":"Tester2487","magne_print":"EF31DD9395FECCF81D523161376A9D02749921BA7E74B6F7ADB8AEC276EB05392D1309620DC4EF00F2091C900F9B94205DBAB81A751E7597","magne_print_status":"61403000","track2":"CA420C6C23BE60AB2FFD6EB5AD13E75F4F47525E403D8734D1D05D242A0C22E30888276ED2DF4D70","validate":0},"payment_system":"Express","purchased_products":[{"epc":"000044040115839946140927","Price":1.99}],"stamp":10,"tablet_processing_done":0,"time":1615344128,"time_capture":1615344124,"time_closed":1615344124,"time_door_closed":1615344124,"time_door_opened":1615344121,"time_opened":1615344121,"time_preauth":1615344127}
+Cookie=>pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDEyNywiZXhwIjoxNjE2MTUwNTI3fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.V5Pi1Yl4nKlUg8wKXa4gv9-34dLkqYrp6nc4Zb3E4tY<=
+Body Length=825
+TransactionBody{"payment_status": "PENDING", "email": "Unknown"}
+In GetCurrentInventoryRestock Function
+Current Inventory Length-> 33
+^CRebuilding Kiosk_Simulatror 
+Current Time in String:  2021-03-10 02:50:27.7997646 +0000 UTC m=+0.001088001
+MM-DD-YYYY :  03-10-2021
+MM-DD-YYYY : ->20210310<- For kiosk -><-In IntiDB
+V=host=prd-iot-slave.bytetech.co port=5432 user=dbservice password=e7Ws3VXCYHZk dbname=pantry sslmode=disable
+2021/03/10 02:50:28 Successfuly Connected to -->prd-iot-slave.bytetech.co<--
+V=host=stg-iot-master.bytetech.co port=5432 user=dbservice password=bghbzz79bML4 dbname=pantry sslmode=disable
+2021/03/10 02:50:28 Successfuly Connected to -->stg-iot-master.bytetech.co<--
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = ''
+  ORDER by rl.start_ts DESC LIMIT 1; 
+-><-
+^CRebuilding Kiosk_Simulatror 
+Current Time in String:  2021-03-10 02:51:23.3512936 +0000 UTC m=+0.001632001
+MM-DD-YYYY :  03-10-2021
+MM-DD-YYYY : ->20210310<- For kiosk ->790<-In IntiDB
+V=host=prd-iot-slave.bytetech.co port=5432 user=dbservice password=e7Ws3VXCYHZk dbname=pantry sslmode=disable
+2021/03/10 02:51:23 Successfuly Connected to -->prd-iot-slave.bytetech.co<--
+V=host=stg-iot-master.bytetech.co port=5432 user=dbservice password=bghbzz79bML4 dbname=pantry sslmode=disable
+2021/03/10 02:51:23 Successfuly Connected to -->stg-iot-master.bytetech.co<--
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '6 days'
+    AND rl.endpoint='/login' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+HERE IN GetStgLoginCookie
+HERE 2 IN GetStgLoginCookie
+HERE 3 IN GetStgLoginCookie
+LoginBody{"default_currency":"USD","timezone":"US/Pacific","min_scans_required":null,"features":["coupon","pause_rfid_on_open_door","hide_prices","hwh","push_to_open"],"rfid_band":"US902","group_id":80,"default_preauth_amount":100,"kiosk_id":790,"max_charge_amount":null,"epay":null,"title":"Byte Technology - DF-I - East Wall","campus_id":87}
+
+head=map[Connection:[Keep-Alive] Content-Length:[334] Content-Type:[application/json] Date:[Wed, 10 Mar 2021 02:51:24 GMT] Keep-Alive:[timeout=5, max=100] Server:[Apache/2.4.18 (Ubuntu)] Set-Cookie:[pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDY4NCwiZXhwIjoxNjE2Mzk5NDg0fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.-pQVD2eZR69pHzQ43_fDiMfTRg5s4qGqjPLI3b10K6Q] X-Api-Service:[Mixalot/API 0.03-ec2] X-Byte-Request-Stored:[1] X-Byte-Timestamp:[1615344684]]<-
+headcookie= -><-
+In GetCurrentInventoryRestock Function
+Current Inventory Length-> 33
+In Send Item Call req body= {
+	"epc": [
+
+		"000085110116008592410763",
+		"000061150116020677660476",
+		"000093690115986165420158",
+		"000061150116016412250705",
+		"000101810116073412700430",
+		"000093680116031054880410",
+		"000092310116055198880023",
+		"000061160116152326153240",
+		"000063160116152326159101",
+		"000026060116152326157252",
+		"000075800116152326156901",
+		"000061150115989658240587",
+		"000040610116082000540695",
+		"000040610116082000540691",
+		"000040610116082000540690",
+		"000093690115986165420003",
+		"000092310116127898590920",
+		"000065750116135574190945",
+		"000056980116152326159749",
+		"000027840116116652220999",
+		"000027840116020713570078",
+		"000040610116082000540694",
+		"000042030116009465510533",
+		"000081750116112376090821",
+		"000091730116025015570086",
+		"000101920116152326156406",
+		"000061630116152326158348",
+		"000071490115916261470703",
+		"000065750116071389770643",
+		"000093690116031089570698",
+		"000061150116020677660822",
+		"000074350116152326155028",
+		"000065690116031165630376"
+],
+	"time":1615344684,
+	"retry_count": 0
+}
+HERE 3 IN GetStgLoginCookie
+LoginBody[]
+
+  SELECT rl.request_headers,rl.request_body
+  FROM mixalot.request_log rl
+  WHERE rl.start_ts >=  NOW()- interval '30 minutes'
+    AND rl.endpoint='/status' AND rl.kiosk_id = '790'
+  ORDER by rl.start_ts DESC LIMIT 1; 
+->790<-
+2021/03/10 02:51:24 Infinite Loop  1
+In GetCurrentInventoryRestock Function
+Current Inventory Length-> 33
+In SendStatusMessage Updating Time
+In SendStatusMessage Call EPOCH= 1615344684 pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDY4NCwiZXhwIjoxNjE2Mzk5NDg0fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.-pQVD2eZR69pHzQ43_fDiMfTRg5s4qGqjPLI3b10K6Q
+{"gcm_id":"fUcDWMxL-sc:APA91bELOmRHqBkOr9cEZlzkfsFlm8lWSwFXgI5ipMMoP-R0ljaAkqXvLnWfgTgURTctxgABZykyn6qgKQdPoA4Qrys0_e_LLPr_D-BSQ-fpJC-boXNrkrW8tALzioRifEj51YRRrR-J","kiosk_id":790,"retry_queue_length":0,"num_transactions_pending_sync":0,"battery_level":100,"is_locked":false,"system_uptime":1350305958,"kiosk_temperature":0,"retry_count":0,"temperature_tags":[{"read_count":3,"read_avg":-1.04,"epc":"000047170115990579250149"},{"read_count":10,"read_avg":-0.82,"epc":"000047160115990534900120"}],"kiosk_temperature_count":0,"time":1615344684,"kit_temperature":0,"rfid_0":4419,"happy_hour":0,"rfid_1":3984,"power":0,"app_uptime":1342881764,"rfid_2":3930,"rfid_3":3939,"rfid_4":3485,"rfid_5":3436,"rfid_6":3396,"rfid_7":3401}
+HERE 3 IN GetStgLoginCookie
+LoginBody{"success":true}
+ALL Vals->num=1,a=2,b=9,c=14,d=1,create=1615344685
+Body=> {"coupon":"","created":1615344675,"currency":"USD","email":"Tester5663@tester.com","order_id":"790X12Y914P1","payment":{"card_pan":"5119427908","card_type":"unknown","first_name":"Joe206","ksn":"9011880B4D28B100027A","last_name":"Tester5663","magne_print":"EF31DD9395FECCF81D523161376A9D02749921BA7E74B6F7ADB8AEC276EB05392D1309620DC4EF00F2091C900F9B94205DBAB81A751E7597","magne_print_status":"61403000","track2":"CA420C6C23BE60AB2FFD6EB5AD13E75F4F47525E403D8734D1D05D242A0C22E30888276ED2DF4D70","validate":1},"payment_system":"Express","purchased_products": [],"stamp":1,"tablet_processing_done":0,"time":1615344685,"time_capture":1615344681,"time_closed":1615344681,"time_door_closed":1615344681,"time_door_opened":1615344678,"time_opened":1615344678,"time_preauth":1615344684}
+Cookie=>pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDY4NCwiZXhwIjoxNjE2Mzk5NDg0fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.-pQVD2eZR69pHzQ43_fDiMfTRg5s4qGqjPLI3b10K6Q<=
+Body Length=778
+TransactionBody{"payment_status": "VALID", "nurse_id": null, "patient_id": null, "payment_error_code": null, "payment_error_code_message": null, "payment_error_code_message_user": null, "email": "Tester5663@tester.com"}
+In Send Item Call EPOCH= 1615344717 pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDY4NCwiZXhwIjoxNjE2Mzk5NDg0fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.-pQVD2eZR69pHzQ43_fDiMfTRg5s4qGqjPLI3b10K6Q 000056980116152326159749
+In Send Item Call req body= {"retry_count":0,"time":1615344717,"epc":"000056980116152326159749","reading_cycle":101732,"order_id":"790X12Y914P1","reason":"add_to_order","direction":"out"} 
+HERE 3 IN GetStgLoginCookie
+LoginBody{"success":true}
+790X12Y914P1 Has Purchased_products  [{000056980116152326159749 3.99}]
+Body=> {"coupon":"","created":1615344675,"currency":"USD","email":"Tester5663@tester.com","order_id":"790X12Y914P1","payment":{"card_pan":"5119427908","card_type":"unknown","first_name":"Joe206","ksn":"9011880B4D28B100027A","last_name":"Tester5663","magne_print":"EF31DD9395FECCF81D523161376A9D02749921BA7E74B6F7ADB8AEC276EB05392D1309620DC4EF00F2091C900F9B94205DBAB81A751E7597","magne_print_status":"61403000","track2":"CA420C6C23BE60AB2FFD6EB5AD13E75F4F47525E403D8734D1D05D242A0C22E30888276ED2DF4D70","validate":0},"payment_system":"Express","purchased_products":[{"epc":"000056980116152326159749","Price":3.99}],"stamp":10,"tablet_processing_done":0,"time":1615344685,"time_capture":1615344681,"time_closed":1615344681,"time_door_closed":1615344681,"time_door_opened":1615344678,"time_opened":1615344678,"time_preauth":1615344684}
+Cookie=>pantry-sid=eyJhbGciOiJIUzI1NiIsImlhdCI6MTYxNTM0NDY4NCwiZXhwIjoxNjE2Mzk5NDg0fQ.eyJzZXJpYWwiOiIwMDAwMWNkNDBlZTIifQ.-pQVD2eZR69pHzQ43_fDiMfTRg5s4qGqjPLI3b10K6Q<=
+Body Length=825
+TransactionBody{"payment_status": "PENDING", "email": "Unknown"}
+^C

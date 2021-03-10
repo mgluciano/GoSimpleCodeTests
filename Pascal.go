@@ -26,7 +26,7 @@ func main() {
     if (ct <=65){
       fmt.Println("Rec\nThe",ct,"Pascal Row is\t",RecPascalNth(ct))
     }else{
-      fmt.Println("Can't run Recursive Solution on ct > 45 as it will Take too Long");
+      fmt.Println("Can't run Recursive Solution on ct > 65 as it will Take too Long");
     }
 
 }

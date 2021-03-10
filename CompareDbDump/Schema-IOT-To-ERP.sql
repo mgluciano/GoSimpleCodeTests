@@ -1,0 +1,23 @@
+
+CREATE SCHEMA report;
+CREATE SCHEMA beta;
+CREATE SCHEMA inm_beta;
+CREATE SCHEMA dms7;
+CREATE SCHEMA iplanner;
+CREATE SCHEMA monitor;
+CREATE SCHEMA rptg;
+CREATE SCHEMA develop;
+CREATE SCHEMA inm_backup;
+CREATE SCHEMA byt_devops;
+CREATE SCHEMA byte_pgdu;
+ALTER SCHEMA inm_backup OWNER TO dbservice;
+ALTER SCHEMA inm_beta OWNER TO dbservice;
+ALTER SCHEMA rptg OWNER TO dbservice;
+ALTER SCHEMA iplanner OWNER TO dbservice;
+ALTER SCHEMA report OWNER TO dbservice;
+ALTER SCHEMA beta OWNER TO dbservice;
+ALTER SCHEMA dms7 OWNER TO dbservice;
+ALTER SCHEMA monitor OWNER TO dbservice;
+ALTER SCHEMA byt_devops OWNER TO dbservice;
+ALTER SCHEMA byte_pgdu OWNER TO dbservice;
+ALTER SCHEMA develop OWNER TO dbservice;

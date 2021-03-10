@@ -1,0 +1,1784 @@
+{
+	"info": {
+		"_postman_id": "c0472bb3-998a-4935-9ecf-15012ac104eb",
+		"name": "DiscountMicroService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create HappyHour1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17363ffc-ee6e-4e29-a12f-8a016330dbe0",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Get Happy Hour ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"HappyHourID\",jsonData.data.addDiscount.discount.id);",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "66fa2607-8613-4fc2-97f6-3d8f16f3e17d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createHappyHour {\n  addDiscount(\n    discount: {\n      clientId:123,\n      value: 6,\n      name: \"HappyHourTestDiscount\"\n      valueType: percent,\n      happyHour:{\n        message: \"a message\",\n        activeDays: {\n          startTime: \"11:20\",\n          endTime:\"12:20\",\n          dayOfWeek:2\n        }\n      }\n    }\n  ){\n    discount{\n        id\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Happy Hour Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "ReadCreateHappyHour",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8277ad93-e04b-42ee-a72d-36f028e79470",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    console.log(pm.variables.get(\"HappyHourID\"))",
+							"});",
+							"",
+							"pm.test(\"Check the HappyHour1 discount Exists\", function () {",
+							"    // Parse response body",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Find the array index for the {{HappyHourID}}",
+							"    var discountsIndex = jsonData.data.Discounts.discounts.map(",
+							"            function(filter) {",
+							"                return filter.id; // <-- HERE is the id of the discount",
+							"            }",
+							"        ).indexOf(pm.variables.get(\"HappyHourID\")); // <-- HERE is the value we are searching for",
+							"",
+							"    // Get the country filter object by using the index calculated above",
+							"    var discountsIds = jsonData.data.Discounts.discounts[discountsIndex];",
+							"",
+							"    // Check that the discounts array (map) exists ",
+							"    pm.expect(discountsIds).to.exist;",
+							"//    console.log(pm.variables.get(\"HappyHourID\"));",
+							"    // Check that the HappyHourID exists in the list of discountIds",
+							"    //pm.expect(discountsIds.id).is.to.equal();",
+							"    pm.test('check generic Attributes', () => {",
+							"",
+							"        pm.expect(discountsIds.name).is.to.equal( \"HappyHourTestDiscount\");",
+							"        pm.expect(discountsIds.clientId).is.to.equal( 123);",
+							"        pm.expect(discountsIds.value).is.to.equal( 6);",
+							"        pm.expect(discountsIds.valueType).is.to.equal( \"percent\");",
+							"        pm.expect(discountsIds.exclusive).is.to.equal( false);",
+							"    });",
+							"    pm.test('check HappyHour Attributes', () => {",
+							"",
+							"        pm.expect(discountsIds.happyHour.message).is.to.equal( \"a message\");",
+							"        pm.expect(discountsIds.happyHour.activeDays[0].dayOfWeek).is.to.equal(2);",
+							"        pm.expect(discountsIds.happyHour.activeDays[0].startTime).is.to.equal( \"11:20\");",
+							"        pm.expect(discountsIds.happyHour.activeDays[0].endTime).is.to.equal( \"12:20\");",
+							"    });",
+							"    pm.test('check NULL  Attributes', () => {",
+							"        pm.expect(discountsIds.storeIds.length).is.to.equal(0);",
+							"        pm.expect(discountsIds.coupon).is.to.equal(null);",
+							"        pm.expect(discountsIds.shelfLife).is.to.equal( null);",
+							"        pm.expect(discountsIds.end).is.to.equal( null);",
+							"        pm.expect(discountsIds.billedToLocation).is.to.equal( 0);",
+							"    });",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query { \n  Discounts(discountQuery: {}) {\n    discounts { \n      id\n      name\n      clientId\n      value\n      valueType\n      start\n      exclusive\n      shelfLife {\n \t\t\tmaxShelfLifeDays\n  \t\t\tmaxExpiresInDays\t\t\n      }\n      billedToLocation\n      coupon  {\n      \tprefix\n        count\n        maxUses\n        codes{\n          code\n        }\n      }\n      storeIds\n      \n      end\n      happyHour{\n        message\n        activeDays{\n          dayOfWeek\n          startTime\n          endTime\n        }\n      }\n    }\n    count\n  }\n}# Write your query or mutation here\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Happy Hour Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Create HappyHour2 Multi Day",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17363ffc-ee6e-4e29-a12f-8a016330dbe0",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Get Happy Hour ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"HappyHourID2\",jsonData.data.addDiscount.discount.id);",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createHappyHour {\n  addDiscount(\n    discount: {\n      clientId:1234,\n      value: 15,\n      name: \"Cool Discount3\"\n      valueType: percent,\n      happyHour:{\n        message: \"a new message\",\n        activeDays: [\n          {\n          startTime: \"11:20\",\n          endTime:\"12:20\",\n          dayOfWeek:1\n          },\n          {\n          startTime: \"11:20\",\n          endTime:\"12:20\",\n          dayOfWeek:2\n          },\n          {\n          startTime: \"11:20\",\n          endTime:\"12:20\",\n          dayOfWeek:3\n          },\n          {\n          startTime: \"11:20\",\n          endTime:\"12:25\",\n          dayOfWeek:5\n          },\n        ]\n      }\n    }\n  ){\n    discount {\n        id\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Happy Hour Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "ReadCreateHappyHour2 Multi Day",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8277ad93-e04b-42ee-a72d-36f028e79470",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check the HappyHour1 discount Exists\", function () {",
+							"    // Parse response body",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Find the array index for the {{HappyHourID2}}",
+							"    var discountsIndex = jsonData.data.Discounts.discounts.map(",
+							"            function(filter) {",
+							"                return filter.id; // <-- HERE is the id of the discount",
+							"            }",
+							"        ).indexOf(pm.variables.get(\"HappyHourID2\")); // <-- HERE is the value we are searching for",
+							"",
+							"    // Get the country filter object by using the index calculated above",
+							"    var discountsIds = jsonData.data.Discounts.discounts[discountsIndex];",
+							"",
+							"    // Check that the discounts array (map) exists ",
+							"    pm.expect(discountsIds).to.exist;",
+							"    console.log(pm.variables.get(\"HappyHourID2\"));",
+							"    // Check that the HappyHourID exists in the list of discountIds",
+							"    //pm.expect(discountsIds.id).is.to.equal();",
+							"    pm.test('check generic Attributes', () => {",
+							"",
+							"        pm.expect(discountsIds.name).is.to.equal( \"Cool Discount3\");",
+							"        pm.expect(discountsIds.clientId).is.to.equal( 1234);",
+							"        pm.expect(discountsIds.value).is.to.equal( 15);",
+							"        pm.expect(discountsIds.valueType).is.to.equal( \"percent\");",
+							"        pm.expect(discountsIds.exclusive).is.to.equal( false);",
+							"    });",
+							"    pm.test('check NULL  Attributes', () => {",
+							"    ",
+							"        pm.expect(discountsIds.storeIds.length).is.to.equal(0);",
+							"        pm.expect(discountsIds.coupon).is.to.equal(null);",
+							"        pm.expect(discountsIds.shelfLife).is.to.equal( null);",
+							"        pm.expect(discountsIds.end).is.to.equal( null);",
+							"        pm.expect(discountsIds.billedToLocation).is.to.equal( 0);",
+							"    });",
+							"",
+							"    ",
+							"    pm.test('check HappyHour Attributes', () => {",
+							"        /*",
+							"        pm.test('', () => {",
+							"        ",
+							"            pm.expect(discountsIds.happyHour.message).is.to.equal( \"a new message\");",
+							"            pm.expect(discountsIds.happyHour.activeDays[0].dayOfWeek).is.to.equal(2);",
+							"            pm.expect(discountsIds.happyHour.activeDays[0].startTime).is.to.equal( \"11:20\");",
+							"            pm.expect(discountsIds.happyHour.activeDays[0].endTime).is.to.equal( \"12:20\");",
+							"        });",
+							"        */",
+							"        var ct =0;",
+							"",
+							"        for (var i = 0; i < (discountsIds.happyHour.activeDays).length; i++) {",
+							"  ",
+							"            console.log(i)",
+							"            console.log(ct)",
+							"            if (discountsIds.happyHour.activeDays[i].dayOfWeek === 1){",
+							"                //console.log(\"HERE3-1\")",
+							"                ct=ct+1;",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].startTime).is.to.equal( \"11:20\");",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].endTime).is.to.equal( \"12:20\");",
+							"",
+							"            }",
+							"            if (discountsIds.happyHour.activeDays[i].dayOfWeek === 2){",
+							"                //console.log(\"HERE3-2\")",
+							"                ct=ct+1;",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].startTime).is.to.equal( \"11:20\");",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].endTime).is.to.equal( \"12:20\");",
+							"",
+							"            }",
+							"            if (discountsIds.happyHour.activeDays[i].dayOfWeek === 3){",
+							"                ct=ct+1;",
+							"                //console.log(\"HERE3-3\")",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].startTime).is.to.equal( \"11:20\");",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].endTime).is.to.equal( \"12:20\");",
+							"",
+							"            }",
+							"            if (discountsIds.happyHour.activeDays[i].dayOfWeek === 5){",
+							"                //console.log(\"HERE3-5\")",
+							"                ct=ct+1;",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].startTime).is.to.equal( \"11:20\");",
+							"                pm.expect(discountsIds.happyHour.activeDays[i].endTime).is.to.equal( \"12:25\");",
+							"",
+							"            }",
+							"            //pm.expect(item).to.equal('Seville')",
+							"//        });",
+							"        }",
+							"        console.log(ct)",
+							"        pm.expect(ct).to.equal(4)",
+							"        ",
+							"    })",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query { \n  Discounts(discountQuery: {}) {\n    discounts { \n      id\n      name\n      clientId\n      value\n      valueType\n      start\n      exclusive\n      shelfLife {\n \t\t\tmaxShelfLifeDays\n  \t\t\tmaxExpiresInDays\t\t\n      }\n      billedToLocation\n      coupon  {\n      \tprefix\n        count\n        maxUses\n        codes{\n          code\n        }\n      }\n      storeIds\n      \n      end\n      happyHour{\n        message\n        activeDays{\n          dayOfWeek\n          startTime\n          endTime\n        }\n      }\n    }\n    count\n  }\n}# Write your query or mutation here\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Happy Hour Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Single Use Coupon1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17363ffc-ee6e-4e29-a12f-8a016330dbe0",
+						"exec": [
+							"",
+							"//console.log(pm.variables.get(\"timestamp\"));",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Get Multi Use Coupon ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"SingleCpnID\",jsonData.data.addDiscount.discount.id);",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd63a130-962c-418a-9858-1d907a765e0b",
+						"exec": [
+							"let a = _.random(1,25644);",
+							"let b = \"Coupon1\";",
+							"let c = _.random(1,25644);",
+							"",
+							"d = a + b +c; ",
+							"pm.environment.set(\"CouponCode1\",d);",
+							"console.log(pm.variables.get(\"CouponCode1\"));",
+							"",
+							"/*  Create Time Stamp  and Current TimeStamp */",
+							"timestamp = new Date();",
+							"//pm.environment.set(\"timestamp\", timestamp);",
+							"//console.log(\"Time Stamp: \"+pm.variables.get(\"timestamp\"));",
+							"postman.setEnvironmentVariable(\"current_timestamp\", timestamp.toISOString());",
+							"///console.log(\"current iso Time Stamp: \"+pm.variables.get(\"current_timestamp\"));",
+							"timestamp = new Date(pm.variables.get(\"current_timestamp\"));",
+							"",
+							"console.log(\"0->\"+timestamp)",
+							"timestamp.setDate(timestamp.getDate() + 1);",
+							"console.log(\"1->\"+timestamp)",
+							"",
+							"",
+							"    ",
+							"    month = '' + (timestamp.getMonth()+1)",
+							"    day = '' + (timestamp.getDate()),",
+							"    year = timestamp.getFullYear();",
+							"",
+							"",
+							"",
+							"    if (month.length < 2) ",
+							"        month = '0' + month;",
+							"    if (day.length < 2) ",
+							"        day = '0' + day;",
+							"",
+							"    var n =''+ timestamp.getTimezoneOffset()/60;",
+							"    ",
+							"    h=n.split('.')[0];",
+							"    m=n.split('.')[1]; ",
+							"    if(m==5){",
+							"    m=\"30\"",
+							"    }else{",
+							"      m=\"00\"",
+							"    }",
+							"    ",
+							"    ",
+							"    if (h.length==0){",
+							"        zone=\"00\"+\":\"+m;",
+							"    }else if (h.length==1){",
+							"        zone=\"0\"+h+\":\"+m;",
+							"    }else if(h.length ==2){",
+							"        zone=h+\":\"+m;",
+							"    }",
+							"",
+							"    hour= ''+timestamp.getHours()",
+							"    min=''+timestamp.getMinutes()",
+							"    sec=''+timestamp.getSeconds()",
+							"    console.log(hour+\"length=>\"+hour.length)",
+							"    ",
+							"    if (hour.length < 2) ",
+							"        hour = '0' + hour;",
+							"    if (min.length < 2) ",
+							"        min = '0' + min;",
+							"    if (sec.length < 2) ",
+							"        sec = '0' + sec;",
+							"",
+							"    ",
+							"    ntime = year+\"-\"+month+\"-\"+day+\"T\"+hour+\":\"+min+\":\"+sec+\".\"+timestamp.getMilliseconds()+\"+\"+zone",
+							"console.log(\"HERE->\"+ntime)",
+							"",
+							"postman.setEnvironmentVariable(\"apply_timestamp\", ntime);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createCoupon {\n   addDiscount(discount: {\n    value: 10, \n    valueType: percent, \n    clientId: 1234 ,\n    start: \"{{current_timestamp}}\",\n    end: \"2020-05-13T15:05:52.675Z\",\n    name: \"SingleUseCoupon\",\n  \tcoupon:{\n  \t  count: 11  \n  \t  prefix:\"{{CouponCode1}}\",\n      maxUses: 1\n      length: 20\n    }\n  }){\n    discount {\n        id\n    }\n  }\n }\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Read Single Use Coupon1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e54a7d71-37d9-4832-911c-41c231cf9d99",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"    console.log(pm.variables.get(\"MultiCpnID\"))",
+							"",
+							"",
+							"pm.test(\"Check the SingleCpnID2 discount Exists\", function () {",
+							"    // Parse response body",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    var discountsIndex = jsonData.data.Discounts.discounts.map(",
+							"            function(filter) {",
+							"                return filter.id; // <-- HERE is the id of the discount",
+							"            }",
+							"        ).indexOf(pm.variables.get(\"SingleCpnID\")); // <-- HERE is the value we are searching for",
+							"",
+							"",
+							"    // Get the country filter object by using the index calculated above",
+							"    var discountsIds = jsonData.data.Discounts.discounts[discountsIndex];",
+							"",
+							"    // Check that the discounts array (map) exists ",
+							"    pm.expect(discountsIds).to.exist;",
+							"    //console.log(pm.variables.get(\"MultiCpnID\"));",
+							"    ",
+							"",
+							"    // Check that the HappyHourID exists in the list of discountIds",
+							"    //pm.expect(discountsIds.id).is.to.equal();",
+							"    pm.test('check generic Attributes', () => {",
+							"        pm.expect(discountsIds.name).is.to.equal( \"SingleUseCoupon\");",
+							"        pm.expect(discountsIds.clientId).is.to.equal( 1234);",
+							"        pm.expect(discountsIds.value).is.to.equal( 10);",
+							"        pm.expect(discountsIds.valueType).is.to.equal( \"percent\");",
+							"        pm.expect(discountsIds.start).is.to.equal(pm.variables.get(\"current_timestamp\"));",
+							"        pm.expect(discountsIds.end).is.to.equal( \"2020-05-13T15:05:52.675Z\");",
+							"        ",
+							"    });",
+							"    pm.test('check NULL Attributes', () => {",
+							"        pm.expect(discountsIds.storeIds.length).is.to.equal(0);",
+							"        pm.expect(discountsIds.exclusive).is.to.equal( false);",
+							"        pm.expect(discountsIds.happyHour).is.to.equal( null);",
+							"        pm.expect(discountsIds.shelfLife).is.to.equal( null);",
+							"        pm.expect(discountsIds.billedToLocation).is.to.equal( 0);",
+							"    });",
+							"    ",
+							"    pm.test('check coupon Specific Attributes', () => {",
+							"        pm.test('Check All coupons for CouponCode Prefix ', () => {",
+							"            var i = 0;",
+							"            for ( i = 0; i < (discountsIds.coupon.codes).length; i++){",
+							"                pm.expect(discountsIds.coupon.codes[i].code).is.to.contain(pm.variables.get(\"CouponCode1\"));",
+							"            }",
+							"            console.log(\"Checked \"+i+\"CouponsCodes last->\"+discountsIds.coupon.codes[i-1]+\"<-\")",
+							"        });",
+							"        pm.expect(discountsIds.coupon.count).is.to.equal( 11);",
+							"        pm.expect(discountsIds.coupon.maxUses).is.to.equal(1);",
+							"        pm.expect(discountsIds.coupon.prefix).is.to.equal(pm.variables.get(\"CouponCode1\"));",
+							"        ",
+							"    ",
+							"    });   ",
+							"    ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query { \n  Discounts(discountQuery: {}) {\n    discounts { \n      id\n      name\n      clientId\n      value\n      valueType\n      start\n      exclusive\n      shelfLife {\n \t\t\tmaxShelfLifeDays\n  \t\t\tmaxExpiresInDays\t\t\n      }\n      billedToLocation\n      coupon  {\n      \tprefix\n        count\n        maxUses\n        codes{\n          code\n        }\n      }\n      storeIds\n      \n      end\n      happyHour{\n        message\n        activeDays{\n          dayOfWeek\n          startTime\n          endTime\n        }\n      }\n    }\n    count\n  }\n}# Write your query or mutation here\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Happy Hour Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Single Use Multi Store Coupon2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0c9184da-4a5a-407f-8e24-52b981f62c70",
+						"exec": [
+							"",
+							"//console.log(pm.variables.get(\"timestamp\"));",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Get Multi Use Coupon ID\", function () {",
+							"    pm.environment.set(\"SingleCpnID2\",jsonData.data.addDiscount.discount.id);",
+							"",
+							"});",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"var codes = jsonData.data.addDiscount.discount.coupon.codes;",
+							"for (var i = 0; i < codes.length; i++) {",
+							"    pm.expect(codes[i].code).to.contain(pm.variables.get(\"CouponCode2\"));",
+							"    pm.environment.set(\"SingleCpnCode\"+i,codes[i].code)",
+							"    console.log(\"->\"+i+\"<-==>\"+codes[i].code+\"<==\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f2fa3b6-1453-4381-a04f-32164c0a6546",
+						"exec": [
+							"let a = _.random(1,25644);",
+							"let b = \"Coupon1\";",
+							"let c = _.random(1,25644);",
+							"",
+							"d = a + b +c; ",
+							"pm.environment.set(\"CouponCode2\",d);",
+							"console.log(pm.variables.get(\"CouponCode2\"));",
+							"",
+							"/*  Create Time Stamp  and Current TimeStamp */",
+							"timestamp = new Date();",
+							"//pm.environment.set(\"timestamp\", timestamp);",
+							"//console.log(\"Time Stamp: \"+pm.variables.get(\"timestamp\"));",
+							"postman.setEnvironmentVariable(\"current_timestamp\", timestamp.toISOString());",
+							"",
+							"timestamp = new Date(pm.variables.get(\"current_timestamp\"));",
+							"",
+							"console.log(\"0->\"+timestamp)",
+							"timestamp.setDate(timestamp.getDate() + 1);",
+							"console.log(\"1->\"+timestamp)",
+							"",
+							"",
+							"    ",
+							"    month = '' + (timestamp.getMonth()+1)",
+							"    day = '' + (timestamp.getDate()),",
+							"    year = timestamp.getFullYear();",
+							"",
+							"",
+							"",
+							"    if (month.length < 2) ",
+							"        month = '0' + month;",
+							"    if (day.length < 2) ",
+							"        day = '0' + day;",
+							"",
+							"    var n =''+ timestamp.getTimezoneOffset()/60;",
+							"    ",
+							"    h=n.split('.')[0];",
+							"    m=n.split('.')[1]; ",
+							"    if(m==5){",
+							"    m=\"30\"",
+							"    }else{",
+							"      m=\"00\"",
+							"    }",
+							"    ",
+							"    ",
+							"    if (h.length<1){",
+							"        mil=\"00\"+\":\"+m;",
+							"    }else if (h.length<2){",
+							"        mil=\"0\"+h+\":\"+m;",
+							"    }else if(h.length ==2){",
+							"        mil=h+\":\"+m;",
+							"    }",
+							"",
+							"    hour= ''+timestamp.getHours()",
+							"    min=''+timestamp.getMinutes()",
+							"    sec=''+timestamp.getSeconds()",
+							"    console.log(hour+\"length=>\"+hour.length)",
+							"    ",
+							"    if (hour.length < 2) ",
+							"        hour = '0' + hour;",
+							"    if (min.length < 2) ",
+							"        min = '0' + min;",
+							"    if (sec.length < 2) ",
+							"        sec = '0' + sec;",
+							"",
+							"    ",
+							"    ntime = year+\"-\"+month+\"-\"+day+\"T\"+hour+\":\"+min+\":\"+sec+\".\"+timestamp.getMilliseconds()+\"+\"+mil",
+							"console.log(\"HERE->\"+ntime)",
+							"",
+							"postman.setEnvironmentVariable(\"apply_timestamp\", ntime);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createCoupon {\n   addDiscount(discount: {\n    value: 10, \n    valueType: percent, \n    clientId: 1234,\n    start: \"{{current_timestamp}}\",\n    end: \"2050-05-13T15:05:52.675Z\",\n    name: \"SingleUseCoupon withStores\",\n    storeIds: [1234,44545,444,555]\n  \tcoupon:{\n  \t  count: 11  \n  \t  prefix:\"{{CouponCode2}}\",\n      maxUses: 1\n      length: 20\n    }\n  }){\n    discount {\n        id\n        coupon{\n            codes{\n                code\n            }\n        }\n    }\n  }\n }\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Read SIngle Use Multi Store Coupon",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8277ad93-e04b-42ee-a72d-36f028e79470",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"    console.log(pm.variables.get(\"SingleCpnID2\"))",
+							"",
+							"",
+							"pm.test(\"Check the SingleCpnID2 discount Exists\", function () {",
+							"    // Parse response body",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    var discountsIndex = jsonData.data.Discounts.discounts.map(",
+							"            function(filter) {",
+							"                return filter.id; // <-- HERE is the id of the discount",
+							"            }",
+							"        ).indexOf(pm.variables.get(\"SingleCpnID2\")); // <-- HERE is the value we are searching for",
+							"",
+							"",
+							"    // Get the country filter object by using the index calculated above",
+							"    var discountsIds = jsonData.data.Discounts.discounts[discountsIndex];",
+							"",
+							"    // Check that the discounts array (map) exists ",
+							"    pm.expect(discountsIds).to.exist;",
+							"    //console.log(pm.variables.get(\"MultiCpnID\"));",
+							"    ",
+							"    pm.test('check storeIDs', () => {",
+							"        var ct =0;",
+							"        //console.log(\"HERE\")",
+							"        //console.log((discountsIds.storeIds).length)",
+							"        //console.log(discountsIds.storeIds[0])",
+							"        //console.log(ct)",
+							"//        _.each(discountsIds.storeIds, (item) => {",
+							"        for (var i = 0; i < (discountsIds.storeIds).length; i++) {",
+							"  //      _.forEach(resp, (discountsIds.storeIds, index) => {",
+							"            //console.log(i)",
+							"            //console.log(ct)",
+							"            if ((discountsIds.storeIds)[i] === 1234){",
+							"                ct=ct+1;",
+							"            }",
+							"            if (discountsIds.storeIds[i] === 44545){",
+							"                ct=ct+1;",
+							"            }",
+							"            if (discountsIds.storeIds[i] === 444){",
+							"                ct=ct+1;",
+							"            }",
+							"            if (discountsIds.storeIds[i] === 555){",
+							"                ct=ct+1;",
+							"            }",
+							"            //pm.expect(item).to.equal('Seville')",
+							"//        });",
+							"        }",
+							"        //console.log(ct)",
+							"        pm.expect(ct).to.equal(4)",
+							"        ",
+							"    })",
+							"",
+							"    // Check that the HappyHourID exists in the list of discountIds",
+							"    //pm.expect(discountsIds.id).is.to.equal();",
+							"    pm.test('check generic Attributes', () => {",
+							"        pm.expect(discountsIds.name).is.to.equal( \"SingleUseCoupon withStores\");",
+							"        pm.expect(discountsIds.clientId).is.to.equal( 1234);",
+							"        pm.expect(discountsIds.value).is.to.equal( 10);",
+							"        pm.expect(discountsIds.valueType).is.to.equal( \"percent\");",
+							"        pm.expect(discountsIds.start).is.to.equal(pm.variables.get(\"current_timestamp\"));",
+							"        pm.expect(discountsIds.end).is.to.equal( \"2050-05-13T15:05:52.675Z\");",
+							"        ",
+							"    });",
+							"    pm.test('check NULL Attributes', () => {",
+							"        pm.expect(discountsIds.exclusive).is.to.equal( false);",
+							"        pm.expect(discountsIds.happyHour).is.to.equal( null);",
+							"        pm.expect(discountsIds.shelfLife).is.to.equal( null);",
+							"        pm.expect(discountsIds.billedToLocation).is.to.equal( 0);",
+							"    });",
+							"    ",
+							"    pm.test('check coupon Specific Attributes', () => {",
+							"        pm.test('Check All coupons for CouponCode Prefix ', () => {",
+							"            var i = 0;",
+							"            for ( i = 0; i < (discountsIds.coupon.codes).length; i++){",
+							"                pm.expect(discountsIds.coupon.codes[i].code).is.to.contain(pm.variables.get(\"CouponCode2\"));",
+							"            }",
+							"            console.log(\"Checked \"+i+\"CouponsCodes last->\"+discountsIds.coupon.codes[i-1].code+\"<-\")",
+							"        });",
+							"        pm.expect(discountsIds.coupon.count).is.to.equal( 11);",
+							"        pm.expect(discountsIds.coupon.maxUses).is.to.equal(1);",
+							"        pm.expect(discountsIds.coupon.prefix).is.to.equal(pm.variables.get(\"CouponCode2\"));",
+							"        ",
+							"    ",
+							"    });   ",
+							"    ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query { \n  Discounts(discountQuery: {}) {\n    discounts { \n      id\n      name\n      clientId\n      value\n      valueType\n      start\n      exclusive\n      shelfLife {\n \t\t\tmaxShelfLifeDays\n  \t\t\tmaxExpiresInDays\t\t\n      }\n      billedToLocation\n      coupon  {\n      \tprefix\n        count\n        maxUses\n        codes{\n          code\n        }\n      }\n      storeIds\n      \n      end\n      happyHour{\n        message\n        activeDays{\n          dayOfWeek\n          startTime\n          endTime\n        }\n      }\n    }\n    count\n  }\n}# Write your query or mutation here\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Happy Hour Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Create ShelfLife Discount 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17363ffc-ee6e-4e29-a12f-8a016330dbe0",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Get Multi Use Coupon ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"ShelfLife1ID\",jsonData.data.addDiscount.discount.id);",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd63a130-962c-418a-9858-1d907a765e0b",
+						"exec": [
+							"/*const a = _.random(1,25644);",
+							"let b = 3;//\"Coupon1\";",
+							"let c = _.random(1,25644);",
+							"",
+							"d = a + b +c; ",
+							"*/",
+							"const coupon = \"CouponC\"+_.random(1,25644);",
+							"pm.environment.set(\"CouponCode1\",coupon);",
+							"",
+							"/*",
+							"",
+							"pm.environment.set(“RandomNumber”, _.random(1,256464));",
+							"pm.environment.set(“CouponCode1”, _.random(1,256464)_.random(1,256464);",
+							"",
+							"pm.environment.set(“RandomNumber”, _.random(1,256464));",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createShelfLife {\n  addDiscount(\n    discount: {\n      clientId:123,\n      value: 6,\n      name: \"ShelfLife Discount\",\n      storeIds: [1234,44545,222,555]\n      valueType: percent,\n      shelfLife:{\n        maxShelfLifeDays: 9,\n        maxExpiresInDays: 2\n      }\n    }\n  ){\n    discount {\n        id\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Read ShelfLife Discount 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8277ad93-e04b-42ee-a72d-36f028e79470",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(pm.variables.get(\"ShelfLife1ID\"))",
+							"pm.test(\"Check the ShelfLife1ID discount Exists\", function () {",
+							"    // Parse response body",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    var discountsIndex = jsonData.data.Discounts.discounts.map(",
+							"            function(filter) {",
+							"                return filter.id; // <-- HERE is the id of the discount",
+							"            }",
+							"        ).indexOf(pm.variables.get(\"ShelfLife1ID\")); // <-- HERE is the value we are searching for",
+							"",
+							"",
+							"    // Get the country filter object by using the index calculated above",
+							"    var discountsIds = jsonData.data.Discounts.discounts[discountsIndex];",
+							"",
+							"    pm.test('check ID Match', () => {",
+							"        pm.expect(discountsIds.id).is.to.equal( pm.variables.get(\"ShelfLife1ID\"));",
+							"        ",
+							"    });",
+							"    // Check that the discounts array (map) exists ",
+							"    pm.expect(discountsIds).to.exist;",
+							"    //console.log(pm.variables.get(\"ShelfLife1ID\"));",
+							"    ",
+							"    pm.test('check storeIDs', () => {",
+							"        var ct =0;",
+							"        /*",
+							"        console.log(\"HERE\")",
+							"        console.log((discountsIds.storeIds).length)",
+							"        console.log(discountsIds.storeIds[0])",
+							"        console.log(ct)",
+							"       */        ",
+							"//        _.each(discountsIds.storeIds, (item) => {",
+							"        for (var i = 0; i < (discountsIds.storeIds).length; i++) {",
+							"  //      _.forEach(resp, (discountsIds.storeIds, index) => {",
+							"            //console.log(i)",
+							"            //console.log(ct)",
+							"            if ((discountsIds.storeIds)[i] === 1234){",
+							"                ct=ct+1;",
+							"            }",
+							"            if (discountsIds.storeIds[i] === 44545){",
+							"                ct=ct+1;",
+							"            }",
+							"            if (discountsIds.storeIds[i] === 222){",
+							"                ct=ct+1;",
+							"            }",
+							"            if (discountsIds.storeIds[i] === 555){",
+							"                ct=ct+1;",
+							"            }",
+							"            //pm.expect(item).to.equal('Seville')",
+							"//        });",
+							"        }",
+							"        //console.log(ct)",
+							"        pm.expect(ct).to.equal(4)",
+							"        ",
+							"    })",
+							"",
+							"    // Check that the discount attributes exist in the body of discountIds",
+							"    //pm.expect(discountsIds.id).is.to.equal();",
+							"    pm.test('check generic Attributes', () => {",
+							"        pm.expect(discountsIds.name).is.to.equal( \"ShelfLife Discount\");",
+							"        pm.expect(discountsIds.clientId).is.to.equal( 123);",
+							"        pm.expect(discountsIds.value).is.to.equal( 6);",
+							"        pm.expect(discountsIds.valueType).is.to.equal( \"percent\");",
+							"        pm.expect(discountsIds.exclusive).is.to.equal( false);",
+							"    });",
+							"    pm.test('check NULL  Attributes', () => {",
+							"    ",
+							"        pm.expect(discountsIds.coupon).is.to.equal(null);",
+							"        pm.expect(discountsIds.happyHour).is.to.equal( null);",
+							"        pm.expect(discountsIds.end).is.to.equal( null);",
+							"        pm.expect(discountsIds.billedToLocation).is.to.equal( 0);",
+							"    });",
+							"    pm.test('check shelfLife Specific  Attributes', () => {",
+							"        ",
+							"        pm.expect(discountsIds.shelfLife.maxShelfLifeDays).is.to.equal( 9);",
+							"        pm.expect(discountsIds.shelfLife.maxExpiresInDays).is.to.equal( 2);",
+							"    ",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query { \n  Discounts(discountQuery: {}) {\n    discounts { \n      id\n      name\n      clientId\n      value\n      valueType\n      start\n      exclusive\n      shelfLife {\n \t\t\tmaxShelfLifeDays\n  \t\t\tmaxExpiresInDays\t\t\n      }\n      billedToLocation\n      coupon  {\n      \tprefix\n        count\n        maxUses\n        codes{\n          code\n        }\n      }\n      storeIds\n      \n      end\n      happyHour{\n        message\n        activeDays{\n          dayOfWeek\n          startTime\n          endTime\n        }\n      }\n    }\n    count\n  }\n}# Write your query or mutation here\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Happy Hour Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Calc Discount No Discount 2 Skus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65130dce-6310-4586-a9c8-7ae3a768e613",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(pm.variables.get(\"Checking Apply: Order ID 1234567\"))",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;1",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.calculateDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(6);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(10);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(7);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(14);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "95fcce0b-ad37-452d-9ab5-847992bb44fe",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": " query { \n#  Discounts(discountQuery: {}) {query {\n\t  calculateDiscount(calculateQuery: {\n      clientId: 123,\n      storeId: 1234,\n      couponCode:\"12ffffeiiMoreOptionsWithZ\"\n      time: \"2020-04-29T21:32:48.868+01:00\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 6,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 7\n        },       \n      ]\n    }){\n    \titems{\n        sku\n        categoryId\n        price\n        shelfLifeDays\n        expiresInDays\n        discountedPrice\n        discounts{\n          id\n          name\n        }\n      }\n  \t}\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Apply Discount No Discount 2 Skus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e52c739-8552-414f-a6af-5fb2353c2207",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(pm.variables.get(\"Checking Apply: Order ID 1234567\"))",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;1",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.applyDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(6);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(10);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(7);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(14);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e780e106-4a31-40ec-9520-cd2db7830d65",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation applyDiscount {\n  applyDiscount(\n    applyObject: {\n      clientId: 123,\n      orderId: \"1234567\",\n      storeId: 1234,\n      couponCode:\"12ffffeiiMoreOptionsWithZ\"\n      time: \"2020-04-29T21:32:48.868+01:00\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 6,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 7\n        },       \n      ]\n    }\n  ){\n    orderId\n    items{\n      sku,\n      categoryId,\n      price,\n      shelfLifeDays,\n      expiresInDays,\n      discountedPrice,\n      discounts{\n        id\n        name\n      }\n    }\n  }\n }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Calc Discount Using Single Coupon1-0 Bad Store ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "50437b82-4d45-4024-9432-15011598e396",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(pm.variables.get(\"Checking Apply: Order ID 1234567\"))",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.calculateDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(6);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(10);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(7);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(14);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "77bfe4ab-c1f3-4f20-8bf1-37a794c72074",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": " query { \n#  Discounts(discountQuery: {}) {query {\n\t  calculateDiscount(calculateQuery: {\n      clientId: 123,\n      storeId: 1,\n      couponCode:\"{{SingleCpnCode0}}\"\n      time: \"{{apply_timestamp}}\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 6,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 7\n        },       \n      ]\n     }){\n    \titems{\n        sku\n        categoryId\n        price\n        shelfLifeDays\n        expiresInDays\n        discountedPrice\n        discounts{\n          id\n          name\n        }\n      }\n  \t}\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Apply Discount Using Single Coupon1-0 Bad Store ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a82edfc-e8eb-48b7-af02-1d05ec329bc1",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(pm.variables.get(\"Checking Apply: Order ID 1234567\"))",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.applyDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(6);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(10);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(7);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(14);",
+							"                    pm.expect(items[i].discounts.length).to.equal(0);",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "73c6eb26-2e30-458c-9f15-c72810e85afb",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation applyDiscount {\n  applyDiscount(\n    applyObject: {\n      clientId: 123,\n      orderId: \"12345678\",\n      storeId: 1,\n      couponCode:\"{{SingleCpnCode0}}\"\n      time: \"{{apply_timestamp}}\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 6,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 7\n        },       \n      ]\n    }\n  ){\n    orderId\n    items{\n      sku,\n      categoryId,\n      price,\n      shelfLifeDays,\n      expiresInDays,\n      discountedPrice,\n      discounts{\n        id\n        name\n        coupon{\n          prefix\n          count\n          maxUses\n          codes{\n              code\n          }\n        }\n      }\n    }\n  }\n }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Calc Discount Using Single Coupon1-0 With Store ID 444",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e657db5-8cc2-4c22-b4bc-40a07734d188",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(\"Checking Apply: Order ID 1234567\")",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.calculateDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(6);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(9);",
+							"                    pm.expect(items[i].discounts.length).to.equal(1);",
+							"                    pm.test(\"Test discount of Item sku 2020\", () => {",
+							"                        pm.expect(items[i].discounts[0].id).to.equal(pm.variables.get(\"SingleCpnID2\"))           ",
+							"                        pm.expect(items[i].discounts[0].coupon.maxUses).to.equal(1);                                   ",
+							"                    });",
+							"                    ",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(7);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(12.6);",
+							"                    pm.expect(items[i].discounts.length).to.equal(1);",
+							"                    pm.test(\"Test discount of Item sku 2021\", () => {",
+							"                        pm.expect(items[i].discounts[0].id).to.equal(pm.variables.get(\"SingleCpnID2\"))           ",
+							"                        pm.expect(items[i].discounts[0].coupon.maxUses).to.equal(1);                                   ",
+							"                    });",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "10c092af-a90c-440a-b5fd-962bc88a1953",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": " query { \n#  Discounts(discountQuery: {}) {query {\n\t  calculateDiscount(calculateQuery: {\n      clientId: 1234,\n      storeId: 1234,\n      couponCode:\"{{SingleCpnCode0}}\"\n      time: \"{{apply_timestamp}}\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 6,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 7\n        },       \n      ]\n     }){\n    \titems{\n        sku\n        categoryId\n        price\n        shelfLifeDays\n        expiresInDays\n        discountedPrice\n        discounts{\n          id\n          name\n          coupon{\n            prefix\n            count\n            maxUses\n            codes{\n                code\n            }\n          }\n        }\n      }\n  \t}\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Apply Discount Using Single Coupon1-0 With Store ID 444",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "24b70c20-da97-46d7-a658-0c0724004d1c",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(\"Checking Apply: Order ID 1234567\")",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.applyDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(6);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(9);",
+							"                    pm.expect(items[i].discounts.length).to.equal(1);",
+							"                    pm.test(\"Test discount of Item sku 2020\", () => {",
+							"                        pm.expect(items[i].discounts[0].id).to.equal(pm.variables.get(\"SingleCpnID2\"))           ",
+							"                        pm.expect(items[i].discounts[0].coupon.maxUses).to.equal(1);                                   ",
+							"                    });",
+							"                    ",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(7);",
+							"                    pm.expect(items[i].discountedPrice).to.equal(12.6);",
+							"                    pm.expect(items[i].discounts.length).to.equal(1);",
+							"                    pm.test(\"Test discount of Item sku 2021\", () => {",
+							"                        pm.expect(items[i].discounts[0].id).to.equal(pm.variables.get(\"SingleCpnID2\"))          ",
+							"                        pm.expect(items[i].discounts[0].coupon.maxUses).to.equal(1);           ",
+							"                    });",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c88fee9d-ce5d-4a9b-baad-4b17697d273d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation applyDiscount {\n  applyDiscount(\n    applyObject: {\n      clientId: 1234,\n      orderId: \"12345678\",\n      storeId: 1234,\n      couponCode:\"{{SingleCpnCode0}}\"\n      time: \"{{apply_timestamp}}\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 6,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 7\n        },       \n      ]\n    }\n  ){\n    orderId\n    items{\n      sku,\n      categoryId,\n      price,\n      shelfLifeDays,\n      expiresInDays,\n      discountedPrice,\n      discounts{\n        id\n        name\n        coupon{\n          prefix\n          count\n          maxUses\n          codes{\n              code\n          }\n        }\n      }\n    }\n  }\n }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Calc Discount With Shelf Life Discount 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4adc3b6f-d272-4ac8-9a06-b10d3cafc10c",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(\"Checking Apply: Order ID 1234567\")",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.calculateDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(1);",
+							"                    pm.expect(items[i].discountedPrice).to.be.below(9);",
+							"                    pm.expect(items[i].discounts.length).to.be.above(0)",
+							"                    pm.test(\"Test discount of Item sku 2020\", () => {",
+							"                        pm.expect(items[i].discounts[items[i].discounts.length-1].id).to.equal(pm.variables.get(\"ShelfLife1ID\"))           ",
+							"                        pm.expect(items[i].discounts[0].coupon).to.equal(null);                                   ",
+							"                    });",
+							"                    ",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(1);",
+							"                    pm.expect(items[i].discountedPrice).to.be.below(12.7);",
+							"                    pm.expect(items[i].discounts.length).to.be.above(0);",
+							"                    pm.test(\"Test discount of Item sku 2021\", () => {",
+							"                        pm.expect(items[i].discounts[items[i].discounts.length-1].id).to.equal(pm.variables.get(\"ShelfLife1ID\"))           ",
+							"                        pm.expect(items[i].discounts[items[i].discounts.length-1].coupon).to.equal(null);                ",
+							"                    });",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "44464d45-e953-4f46-b729-1f9f3910c4fb",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": " query { \n#  Discounts(discountQuery: {}) {query {\n\t  calculateDiscount(calculateQuery: {\n      clientId: 123,\n      storeId: 1234,\n      couponCode:\"CC\"\n      time: \"{{apply_timestamp}}\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 1,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 1\n        },       \n      ]\n     }){\n    \titems{\n        sku\n        categoryId\n        price\n        shelfLifeDays\n        expiresInDays\n        discountedPrice\n        discounts{\n          id\n          name\n          coupon{\n            prefix\n            count\n            maxUses\n            codes{\n                code\n            }\n          }\n        }\n      }\n  \t}\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Apply Discount With Shelf Life Discount 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "43674a59-b88a-45b0-bd35-eefa44d052ee",
+						"exec": [
+							"// example using pm.response.to.have",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"console.log(\"Checking Apply: Order ID 1234567\")",
+							"",
+							"pm.test('Test # Items', () => {",
+							"    var ct =0;",
+							"    var jsonData = pm.response.json();",
+							"    // Find the array index for the {{MultiCpnID}}",
+							"    ",
+							"    var items = jsonData.data.applyDiscount.items;",
+							"    for (var i = 0; i < items.length; i++) {",
+							"            if (items[i].sku === 2020){",
+							"                pm.test(\"Test Items sku 2020\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(10);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(8);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(1);",
+							"                    pm.expect(items[i].discountedPrice).to.be.below(9);",
+							"                    pm.expect(items[i].discounts.length).to.be.above(0)",
+							"                    pm.test(\"Test discount of Item sku 2020\", () => {",
+							"                        pm.expect(items[i].discounts[items[i].discounts.length-1].id).to.equal(pm.variables.get(\"ShelfLife1ID\"))           ",
+							"                        pm.expect(items[i].discounts[0].coupon).to.equal(null);                                   ",
+							"                    });",
+							"                    ",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"            if (items[i].sku === 2021){",
+							"                pm.test(\"Test Items sku 2021\", () => {",
+							"                    pm.expect(items[i].categoryId).to.equal(123);",
+							"                    pm.expect(items[i].price).to.equal(14);",
+							"                    pm.expect(items[i].shelfLifeDays).to.equal(9);",
+							"                    pm.expect(items[i].expiresInDays).to.equal(1);",
+							"                    pm.expect(items[i].discountedPrice).to.be.below(12.7);",
+							"                    pm.expect(items[i].discounts.length).to.be.above(0);",
+							"                    pm.test(\"Test discount of Item sku 2021\", () => {",
+							"                        pm.expect(items[i].discounts[items[i].discounts.length-1].id).to.equal(pm.variables.get(\"ShelfLife1ID\"))           ",
+							"                        pm.expect(items[i].discounts[items[i].discounts.length-1].coupon).to.equal(null);                ",
+							"                    });",
+							"                });",
+							"                ct=ct+1;",
+							"            }",
+							"        console.log(\"ct=\"+ct)",
+							"",
+							"        }",
+							"        pm.expect(ct).to.equal(2)",
+							"        ",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a4ff0b3c-8e4a-4671-bdce-cd16d2dccbbb",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation applyDiscount {\n  applyDiscount(\n    applyObject: {\n      clientId: 123,\n      orderId: \"ShelfLife1\",\n      storeId: 1234,\n      couponCode:\"CC\"\n      time: \"{{apply_timestamp}}\",\n      items: [{\n            sku: 2020,\n            categoryId: 123,\n            price: 10,\n            shelfLifeDays: 8,\n            expiresInDays: 1,\n      \t},        \n      \t{\n            sku: 2021\n            categoryId: 123\n            price: 14\n            shelfLifeDays: 9\n            expiresInDays: 1\n        },       \n      ]\n    }\n  ){\n    orderId\n    items{\n      sku,\n      categoryId,\n      price,\n      shelfLifeDays,\n      expiresInDays,\n      discountedPrice,\n      discounts{\n        id\n        name\n        coupon{\n          prefix\n          count\n          maxUses\n          codes{\n              code\n          }\n        }\n      }\n    }\n  }\n }",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Create Basic Multi Use Coupon 1 Discount"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cb728087-d06c-4748-90ec-e0c8089ce17c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a46d9bb0-ac9b-441f-8912-fa408c59a9c7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0db17ac4-4f63-4b64-9e12-ecf756fbd723",
+			"key": "RandomNumber",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	],
+	"protocolProfileBehavior": {}
+}
