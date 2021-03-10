@@ -1,4 +1,3 @@
-
 package models
 
 import (
@@ -10,22 +9,22 @@ import (
     "strings"
 
     _ "github.com/lib/pq"
-//    "time"
+    "time"
     //"/Login"
 
 )
 
 type Login struct {
 	GcmID         string        `json:"gcm_id"`
-	AppVcode      int           `json:"app_vcode"`
-	Time          int           `json:"time"`
-	AppVname      string        `json:"app_vname"`
-	Login         string        `json:"login"`
-	TimeMs        int64         `json:"time_ms"`
+	AppVcode      int64           `json:"app_vcode" default:1`
+	Time          int64          `json:"time"`
+	AppVname      string        `json:"app_vname" default:"4.6"`
+	Login         string        `json:"login" default:"kiosk@pantrylabs.com"`
+	TimeMs        int64         `json:"time_ms" `
 	Components    Components    `json:"components"`
 	Configuration Configuration `json:"configuration"`
 	Serial        string        `json:"serial"`
-	Password      string        `json:"password"`
+	Password      string        `json:"password" default:"Pan312345"`
 }
 type Software struct {
 	CommonName      string `json:"common_name"`
@@ -47,50 +46,122 @@ type Components struct {
 	Hardware []Hardware `json:"hardware"`
 }
 type Configuration struct {
-	Rfidband                              string `json:"rfidBand"`
-	Maxchargeamount                       string `json:"maxChargeAmount"`
-	Kiosklockeddownmessage                string `json:"kioskLockedDownMessage"`
-	Gcmid                                 string `json:"gcmId"`
-	Temperatureoffset                     string `json:"temperatureOffset"`
-	Defaultcurrency                       string `json:"defaultCurrency"`
-	Defaultpreauthamount                  string `json:"defaultPreauthAmount"`
-	Kioskislockeddown                     string `json:"kioskIsLockedDown"`
-	Minscansrequired                      string `json:"minScansRequired"`
-	Kioskserverurl                        string `json:"kioskServerUrl"`
-	Epayhosts                             string `json:"ePayHosts"`
-	Simcardmode                           string `json:"simCardMode"`
-	Disableofflinepayments                string `json:"disableOfflinePayments"`
-	Validreadingreadingcyclescount        string `json:"validReadingReadingCyclesCount"`
+	Rfidband                              string `json:"rfidBand" default:"US902"`
+	Maxchargeamount                       string `json:"maxChargeAmount" default:"0"`
+	Kiosklockeddownmessage                string `json:"kioskLockedDownMessage" default:""`
+	Gcmid                                 string `json:"gcmId" default:""`
+	Temperatureoffset                     string `json:"temperatureOffset" default:"0"`
+	Defaultcurrency                       string `json:"defaultCurrency" default:"USD"`
+	Defaultpreauthamount                  string `json:"defaultPreauthAmount" default:"100"`
+	Kioskislockeddown                     string `json:"kioskIsLockedDown" default:"false"`
+	Minscansrequired                      string `json:"minScansRequired" default:"0"`
+	Kioskserverurl                        string `json:"kioskServerUrl" default:"http://kiosk-stg.bytefoods.com/"`
+	Epayhosts                             string `json:"ePayHosts" default:""`
+	Simcardmode                           string `json:"simCardMode" default:"BOTH"`
+	Disableofflinepayments                string `json:"disableOfflinePayments" default:"false"`
+	Validreadingreadingcyclescount        string `json:"validReadingReadingCyclesCount" default:"2"`
 	ID                                    string `json:"id"`
-	Rssithresholdwhenadditemonlyinrestock string `json:"rssiThresholdWhenAddItemOnlyInRestock"`
-	Rssithreshold                         string `json:"rssiThreshold"`
-	Volume                                string `json:"volume"`
-	Features                              string `json:"features"`
-	Epayterminalid                        string `json:"ePayTerminalId"`
-	Offlinemodeduration                   string `json:"offlineModeDuration"`
-	Happyhourdiscount                     string `json:"happyHourDiscount"`
-	Campusid                              string `json:"campusId"`
+	Rssithresholdwhenadditemonlyinrestock string `json:"rssiThresholdWhenAddItemOnlyInRestock" default:"-57"`
+	Rssithreshold                         string `json:"rssiThreshold" default:"-76"`
+	Volume                                string `json:"volume" default:"1.0"`
+	Features                              string `json:"features" default:"[\"coupon\",\"hide_no_thanks_button\",\"pause_rfid_on_open_door\"]"`
+	Epayterminalid                        string `json:"ePayTerminalId" default:""`
+	Offlinemodeduration                   string `json:"offlineModeDuration" default:"345600000"`
+	Happyhourdiscount                     string `json:"happyHourDiscount" default:"0"`
+	Campusid                              string `json:"campusId" default:"87"`
 }
 
 
 func CreateLogin(storeID string)(Login,error){
 
-  var login Login
-  var err error
-  //login.Components:=new(Components)
 
-  login.Components,err =getComponents(storeID)
+  login, err :=getKioskDetails(storeID)
+  //login.Components:=new(Components)
+  app_vname:=""
+  login.Components,app_vname,err =getComponents(storeID)
   if(err!=nil){
-    login.Components,err =getComponents(storeID)
+    login.Components,app_vname,err =getComponents(storeID)
     if(err!=nil){
       return login, err
     }
   }
+  if app_vname !=""{
+    login.AppVname=app_vname
+  }
 
+
+
+  x,_ :=json.Marshal(login)
+  fmt.Println("RAW LOGIN 1",string(x))
   return login,nil
 }
 
-func getComponents(sID string)(Components,error){
+func getKioskDetails(sID string)(Login,error){
+  var login Login
+  now := time.Now()
+  secs := now.Unix()
+  millis := now.UnixNano()/1000000
+
+  login.Time=secs
+  login.TimeMs=millis
+
+
+  sql := `
+  SELECT id,campus_id,serial,features,gcm_id FROM pantry.kiosk
+  WHERE id=`+sID+`;
+  `
+
+  rows, err := DbR.Query(sql)
+  if err != nil {
+    fmt.Println("In getKioskDetails SQL error",err)
+    return login,err
+  }
+  defer rows.Close()
+
+  var id,camp,ser,feat,gcm string
+  rows.Next()
+  err = rows.Scan(&id,&camp,&ser,&feat,&gcm)
+  if err != nil {
+    fmt.Println("In getKioskDetails SQL error Scan",err)
+    return login,err
+  }
+  login.GcmID=gcm
+  login.Serial=ser
+  login.AppVcode=1
+  login.AppVname="4.6"
+  login.Login="kiosk@pantrylabs.com"
+  login.Password="Pan312345"
+
+  login.Configuration.Gcmid=gcm
+  login.Configuration.Features=feat
+  login.Configuration.Rfidband="US902"
+  login.Configuration.ID=id
+  login.Configuration.Campusid=camp
+  login.Configuration.Rfidband="US902"
+  login.Configuration.Maxchargeamount="0"
+  login.Configuration.Kiosklockeddownmessage=""
+  login.Configuration.Temperatureoffset="0"
+  login.Configuration.Defaultcurrency="USD"
+  login.Configuration.Defaultpreauthamount="100"
+  login.Configuration.Kioskislockeddown="false"
+  login.Configuration.Minscansrequired="0"
+  login.Configuration.Kioskserverurl="http://kiosk-stg.bytefoods.com"
+  login.Configuration.Epayhosts=""
+  login.Configuration.Simcardmode="BOTH"
+  login.Configuration.Disableofflinepayments="false"
+  login.Configuration.Validreadingreadingcyclescount="2"
+  login.Configuration.Rssithresholdwhenadditemonlyinrestock="-57"
+  login.Configuration.Rssithreshold="-76"
+  login.Configuration.Volume="1.0"
+
+  login.Configuration.Epayterminalid=""
+  login.Configuration.Offlinemodeduration="345600000"
+  login.Configuration.Happyhourdiscount="0"
+
+  return login, nil
+}
+
+func getComponents(sID string)(Components, string,error){
 
   var comp Components
 
@@ -108,11 +179,11 @@ func getComponents(sID string)(Components,error){
   rows, err := DbR.Query(sql)
   if err != nil {
     fmt.Println("In getComponents SQL error",err)
-    return comp,err
+    return comp,"",err
   }
   defer rows.Close()
 
-  var tp,fl string
+  var tp,fl,app string
   for rows.Next() {
 
     err = rows.Scan(&tp,&fl)
@@ -123,6 +194,9 @@ func getComponents(sID string)(Components,error){
         sft:=new(Software)
         json.Unmarshal([]byte(fl), &sft)
         soft=append(soft,*sft)
+        if sft.CommonName=="Pantry Service" {
+          app=sft.Version
+        }
       }else if(tp=="hardware"){
         hrd:=new(Hardware)
         json.Unmarshal([]byte(fl), &hrd)
@@ -133,13 +207,13 @@ func getComponents(sID string)(Components,error){
 
   if err != nil {
     fmt.Println("In getComponents SQL error 2nd",err)
-    return comp,err
+    return comp,app,err
   }
 
   comp.Software=soft;
   comp.Hardware=hard;
 
-  return comp, nil
+  return comp,app, nil
 
 
 }
